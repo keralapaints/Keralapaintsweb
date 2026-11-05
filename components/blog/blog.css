@@ -1,0 +1,74 @@
+/* The blog (components/blog): the product pages' look, with a reading column for long-form text. Prefix: bl-. */
+.bl-hero { min-height: 82svh; }
+.bl-title { margin: 0; max-width: 18em; font-family: var(--font-display), Georgia, serif; font-weight: 400; font-size: clamp(34px, 3.6vw, 64px); line-height: 1.04; letter-spacing: -.005em; text-wrap: balance; }
+.bl-meta { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); margin: var(--space-6) 0 0; font-size: var(--text-xs); letter-spacing: .1em; text-transform: uppercase; color: rgb(246 243 233 / .66); }
+.bl-meta > * + *::before { content: "·"; margin-right: var(--space-5); color: var(--gold); }
+
+/* Contents beside the article on wide screens; above it on small ones. */
+.bl-layout { display: grid; grid-template-columns: minmax(200px, 3fr) minmax(0, 8fr); gap: clamp(32px, 6vw, 120px); padding: clamp(56px, 9svh, 120px) var(--page-gutter); }
+.bl-toc { position: sticky; top: calc(var(--header-height, 84px) + 32px); align-self: start; }
+.bl-toc-heading { margin: 0 0 var(--space-4); font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.bl-toc ol { display: grid; gap: var(--space-3); margin: 0; padding: 0 0 0 var(--space-5); border-left: 1px solid var(--pp-line); list-style: none; counter-reset: bl-toc; }
+.bl-toc li { counter-increment: bl-toc; font-size: var(--text-sm); line-height: 1.45; }
+.bl-toc li::before { content: counter(bl-toc, decimal-leading-zero) "  "; color: var(--gold); font-size: 11px; letter-spacing: .1em; }
+.bl-toc a { color: rgb(246 243 233 / .72); transition: color 200ms ease; }
+.bl-toc a:hover { color: var(--ivory); }
+
+/* The reading column: about 70 characters a line. */
+.bl-article { max-width: 44rem; font-size: clamp(16px, 1.1vw, 18px); line-height: 1.75; color: rgb(246 243 233 / .84); }
+.bl-article section { scroll-margin-top: calc(var(--header-height, 84px) + 24px); }
+.bl-article section + section { margin-top: clamp(48px, 7svh, 80px); padding-top: clamp(40px, 6svh, 64px); border-top: 1px solid var(--pp-line); }
+.bl-article h2 { margin: 0 0 var(--space-5); font-family: var(--font-display), Georgia, serif; font-size: clamp(28px, 2.4vw, 42px); font-weight: 400; line-height: 1.12; color: var(--ivory); text-wrap: balance; }
+.bl-article h3 { margin: var(--space-7) 0 var(--space-3); font-size: var(--text-sm); font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ivory); }
+.bl-article p { margin: 0 0 var(--space-5); }
+.bl-article ul, .bl-article ol { display: grid; gap: var(--space-2); margin: 0 0 var(--space-5); padding-left: var(--space-6); list-style: disc; }
+.bl-article ol { list-style: decimal; }
+.bl-article li::marker { color: var(--gold); }
+.bl-article a { color: #efbd62; text-decoration: underline; text-decoration-color: rgb(239 189 98 / .45); text-underline-offset: 3px; transition: text-decoration-color 200ms ease; }
+.bl-article a:hover { text-decoration-color: #efbd62; }
+.bl-intro p:first-child { font-family: var(--font-display), Georgia, serif; font-size: clamp(21px, 1.6vw, 27px); line-height: 1.5; color: rgb(246 243 233 / .94); }
+.bl-sub { padding-left: var(--space-5); border-left: 1px solid rgb(215 165 83 / .35); margin-top: var(--space-6); }
+.bl-sub h3 { margin-top: 0; }
+.bl-callout { margin: var(--space-6) 0; padding: var(--space-5) var(--space-6); border: 1px solid rgb(215 165 83 / .35); border-left: 2px solid var(--gold); border-radius: 14px; background: rgb(215 165 83 / .07); color: var(--ivory); }
+.bl-callout p { margin: 0; }
+.bl-callout .bl-callout-title { margin-bottom: var(--space-2); font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+
+/* The product card inside an article, and the closing links. */
+.bl-product { display: grid; grid-template-columns: 150px minmax(0, 1fr); align-items: center; gap: var(--space-6); margin: var(--space-7) 0 0; padding: var(--space-6); border: 1px solid var(--pp-line); border-radius: 24px; background: linear-gradient(160deg, rgb(255 255 255 / .06), rgb(255 255 255 / .01) 60%); }
+.bl-product-pack { aspect-ratio: 4 / 5; overflow: hidden; }
+.bl-product-pack img { width: 100%; height: 100%; object-fit: contain; scale: 1.5; filter: drop-shadow(0 16px 20px rgb(0 4 8 / .5)); }
+.bl-product-name { margin: 0 0 var(--space-2) !important; font-family: var(--font-display), Georgia, serif; font-size: clamp(22px, 1.8vw, 30px); color: var(--ivory); }
+.bl-product p { font-size: var(--text-sm); }
+.bl-product .pp-cta-button { margin-top: 0; text-decoration: none; }
+.bl-links { margin-top: clamp(48px, 7svh, 80px); padding-top: var(--space-6); border-top: 1px solid var(--pp-line); }
+.bl-article .bl-links ul { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); padding: 0; list-style: none; }
+.bl-links a { text-decoration: none; }
+
+/* The blog index. */
+.bl-index-hero { padding: calc(var(--header-height, 84px) + 10svh) var(--page-gutter) clamp(32px, 6svh, 64px); background: radial-gradient(ellipse at 20% 0%, rgb(215 165 83 / .1), transparent 55%), var(--ink); }
+.bl-index-intro { max-width: 40em; margin: var(--space-5) 0 0; font-size: var(--text-base); line-height: 1.65; color: rgb(246 243 233 / .78); }
+.bl-index-list { padding-top: clamp(24px, 4svh, 48px); background: none; }
+.bl-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: clamp(16px, 2vw, 32px); margin: 0; padding: 0; list-style: none; }
+.bl-card { position: relative; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--pp-line); border-radius: 28px; background: linear-gradient(160deg, rgb(255 255 255 / .05), rgb(255 255 255 / .01) 60%); transition: border-color 300ms ease, translate 500ms var(--pp-ease); }
+.bl-card:hover, .bl-card:focus-within { border-color: rgb(215 165 83 / .5); translate: 0 -4px; }
+.bl-card-visual { aspect-ratio: 16 / 8; overflow: hidden; }
+.bl-card-visual img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.7); transition: scale 900ms var(--pp-ease); }
+.bl-card:hover .bl-card-visual img { scale: 1.04; }
+.bl-card-body { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); padding: clamp(24px, 2.4vw, 40px); }
+.bl-card-body .pp-eyebrow { margin: 0; }
+.bl-card h2 { margin: 0; font-family: var(--font-display), Georgia, serif; font-size: clamp(26px, 2.2vw, 36px); font-weight: 400; line-height: 1.12; }
+.bl-card h2 a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.bl-card h2 a:focus-visible { outline: none; }
+.bl-card:has(h2 a:focus-visible) { outline: 2px solid var(--gold); outline-offset: 4px; }
+.bl-card-body > p { margin: 0; font-size: var(--text-base); line-height: 1.6; color: var(--text-secondary); }
+.bl-card .bl-meta { margin: 0; }
+
+@media (max-width: 1023px) {
+  .bl-hero { min-height: 0; }
+  .bl-layout { grid-template-columns: minmax(0, 1fr); }
+  .bl-toc { position: static; padding-bottom: var(--space-6); border-bottom: 1px solid var(--pp-line); }
+}
+@media (max-width: 599px) {
+  .bl-product { grid-template-columns: minmax(0, 1fr); }
+  .bl-product-pack { width: 140px; }
+}

@@ -1,0 +1,48 @@
+/* One chapter type scale continued through the Product Range (overrides components/products CSS). */
+/* Continue the story's type and heading-to-description rhythm through the range,
+   rooms, enquiry and sign-off. Scope above individual scene overrides so stylesheet
+   chunk order cannot reintroduce a different scale. */
+.product-world .pr-copy { display: block; width: 42vw; }
+.product-world .pr-copy h2,
+.product-world .pr-splash-heading,
+.product-world .home-copy .home-heading,
+.product-world .enquiry-intro .home-heading,
+.product-world .home-footer .home-heading {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: var(--chapter-title);
+  font-weight: 400;
+  line-height: var(--chapter-title-lh);
+  letter-spacing: var(--chapter-title-ls);
+  color: var(--ivory);
+  margin: 0 0 var(--chapter-copy-gap);
+  padding: 0;
+  border: 0;
+  max-width: none;
+  white-space: normal;
+}
+.product-world .pr-detail { padding-top: 0; }
+.product-world .pr-description,
+.product-world .pr-splash-line,
+.product-world .home-description,
+.product-world .enquiry-intro > p {
+  font-size: var(--chapter-body);
+  font-weight: 400;
+  line-height: var(--chapter-body-lh);
+  letter-spacing: var(--chapter-body-ls);
+  color: var(--chapter-body-color);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+@media (max-width: 1023px) {
+  .product-world .pr-copy { width: auto; }
+  body:has(.story-root[data-cinematic="true"]) .product-world { --chapter-copy-gap: var(--space-4); }
+}
+@media (min-width: 768px) and (max-width: 1023px) and (min-height: 501px) {
+  body:has(.story-root[data-cinematic="true"]) .product-world { --chapter-title: clamp(30px, min(10vw, 6.4svh), 60px); }
+}
+@media (max-width: 767px), (max-width: 1023px) and (max-height: 500px) {
+  .product-world { --chapter-title-lh: .977; }
+}
+@media (max-width: 1023px) and (max-height: 500px) {
+  body:has(.story-root[data-cinematic="true"]) .product-world { --chapter-copy-gap: var(--space-3); --chapter-body-lh: 1.3; }
+}

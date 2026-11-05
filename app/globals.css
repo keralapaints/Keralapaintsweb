@@ -1,0 +1,17 @@
+/* Tailwind supplies the reset and `sr-only` only (the site is hand-written CSS). Scanning the sources made it compile
+   utilities for words such as "transform", "filter" and "ring", which register 41 custom properties on every element
+   (and, in Safari, set them on every element and pseudo-element): each scroll frame then restyled far more than it
+   needed to. */
+@import "tailwindcss" source(none);
+@source inline("sr-only");
+
+@import "./styles/base.css";
+@import "./styles/preloader.css";
+@import "./styles/header.css";
+@import "./styles/story.css";
+@import "./styles/menu.css";
+@import "./styles/small-screens.css";
+@import "./styles/cinematic.css";
+@import "./styles/chapter-template.css";
+@import "./styles/footage.css";
+@import "./styles/site-footer.css";

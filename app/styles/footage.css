@@ -1,0 +1,27 @@
+/* Full-height footage on every screen. */
+/* Full-height footage on every screen, including portrait phones. */
+:root { --footage-height: 100%; }
+.story-root .story-stage,
+.story-root:not([data-cinematic="true"]) .story-scene,
+.product-world .pr-stage,
+.product-world .pr-splash,
+.product-world .home-scene,
+.product-world .home-ending { background: #000; }
+.story-root .scene-visual,
+.story-root[data-cinematic="true"] .scene-visual,
+.story-root[data-cinematic="true"] .video-stage,
+.story-root .scene-copy-shade,
+.product-world .pr-background,
+.product-world .footage-window {
+  position: absolute;
+  inset: 0 0 auto;
+  width: 100%;
+  height: var(--footage-height);
+  overflow: clip;
+}
+@media (max-width: 1023px) and (min-height: 501px) {
+  .story-root[data-cinematic="true"] .scene-content { padding-bottom: max(36px, calc(20px + env(safe-area-inset-bottom))); }
+  .story-root[data-cinematic="true"] .scene-center { text-align: left; }
+  .story-root[data-cinematic="true"] .scene-center .scene-body { margin-inline: 0; max-width: 100%; }
+  .story-root[data-cinematic="true"] .question-eyebrow { margin-top: 20px; margin-bottom: 16px; }
+}

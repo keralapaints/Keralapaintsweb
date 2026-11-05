@@ -1,0 +1,161 @@
+/* Written every frame of the zoom, the liquid wipe and the reveals, on the elements that read them (EnquiryEnding). They do
+   not inherit, so a frame restyles those elements only. */
+@property --ending-blend { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --wall-framing { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --wall-shade { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --form-opacity { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --footer-opacity { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --liquid-size { syntax: "<length>"; inherits: false; initial-value: 5000px; }
+.home-ending { color: #f6f3e9; position: absolute; inset: 0; z-index: 10; overflow: clip; visibility: hidden; opacity: var(--ending-blend, 0); pointer-events: none; }
+.ending-wall, .ending-film, .ending-shade { position: absolute; inset: 0; pointer-events: none; width: 100%; height: 100%; }
+.ending-wall, .ending-film { object-fit: cover; object-position: 50% 100%; transform: scale(calc(1 + 1.4 * var(--wall-framing, 0))); transform-origin: 50% 15%; }
+.ending-film { opacity: 0; }
+.home-ending[data-ready="true"] .ending-film { opacity: 1; }
+.ending-shade { background: #1b291c; opacity: var(--wall-shade, 0); }
+.enquiry-scene { position: absolute; inset: 0; isolation: isolate; opacity: var(--form-opacity, 0); }
+.enquiry-surface { position: relative; height: 100%; overflow-y: auto; display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 6vw; padding: max(110px, 14svh) 12% 7svh 8.5%; background: linear-gradient(100deg, rgb(30 43 28 / .15), transparent); mask: url('/images/enquiry-liquid.svg') 64% 45% / var(--liquid-size, 5000px) var(--liquid-size, 5000px) no-repeat; }
+.home-ending[data-settled="true"] .enquiry-surface { mask: none; pointer-events: auto; }
+.enquiry-surface[inert] { pointer-events: none; }
+/* As in the story, the form is never a scroller of its own: input over it always moves the page. It is laid out to fit
+   the screen (phones pair the short fields); only while a phone keyboard is up does it scroll, to clear the keyboard. */
+.home-ending .enquiry-surface { overflow-y: hidden; }
+/* Typing on a touch screen (field-hold.ts): room beneath the form for the keyboard, so the panel can scroll the field above it,
+   and the panel's own scroll never passes on to the page. */
+.home-ending .enquiry-surface[data-typing] { overflow-y: auto; overscroll-behavior: contain; }
+.enquiry-surface[data-typing]::after { content: ""; grid-column: 1 / -1; height: var(--keyboard, 0px); }
+/* Page 17 of the brief: the heading at 3.8vw beside the form, the line beneath at 1.15vw. */
+.enquiry-intro .home-heading { font-size: clamp(32px, 3.8vw, 66px); white-space: nowrap; }
+.enquiry-intro > p { font-size: clamp(15px, 1.15vw, 20px); line-height: 1.7; margin-top: 28px; color: rgb(246 243 233 / .85); }
+/* The form is a loose deck of glass pieces over the wall, seen in slight perspective. Every piece flies in from the
+   upper right on its own cue (--in, written from the scroll: 0 away, 1 settled, a hair past 1 on the overshoot),
+   then keeps a small offset and tilt of its own (--fx, --fy, --fr), floats gently, and the whole deck leans
+   towards the pointer (--tilt-x/--tilt-y). Only the unprefixed backdrop-filter is written: this build's CSS
+   pipeline drops the property when a -webkit- duplicate sits beside it. */
+.enquiry-form { position: relative; min-width: 0; perspective: 1600px; }
+.enquiry-orbit { position: absolute; inset: -22% -18%; width: 136%; height: 144%; pointer-events: none; fill: none; stroke: rgb(246 243 233 / .22); stroke-width: 1px; stroke-dasharray: 2 5; stroke-linecap: round; opacity: var(--form-opacity, 0); }
+.enquiry-deck { --tilt-x: 0; --tilt-y: 0; position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; transform-style: preserve-3d; transform: rotateY(calc(-11deg + var(--tilt-x) * 5deg)) rotateX(calc(5deg + var(--tilt-y) * -4deg)) rotate(1.5deg); transition: transform 900ms cubic-bezier(.22, 1, .36, 1); }
+.enquiry-piece { --in: 0; --fx: 0px; --fy: 0px; --fr: 0deg; opacity: min(1, var(--in)); transform: translate(calc(var(--fx) + (1 - var(--in)) * 180px), calc(var(--fy) + (1 - var(--in)) * -120px)) rotate(calc(var(--fr) + (1 - var(--in)) * -12deg)) scale(calc(.86 + var(--in) * .14)); animation: enquiry-float calc(6s + var(--fi, 0) * .7s) ease-in-out calc(var(--fi, 0) * -1.3s) infinite; animation-play-state: paused; }
+.enquiry-piece:nth-child(2) { --fi: 1; } .enquiry-piece:nth-child(3) { --fi: 2; } .enquiry-piece:nth-child(4) { --fi: 3; } .enquiry-piece:nth-child(5) { --fi: 4; } .enquiry-piece:nth-child(6) { --fi: 5; } .enquiry-piece:nth-child(7) { --fi: 6; }
+.home-ending[data-settled="true"] .enquiry-piece { animation-play-state: running; }
+@keyframes enquiry-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+/* Once settled each piece keeps a small offset and tilt of its own, so the deck reads as loosely laid out rather than stacked. */
+[data-piece="name"] { --fr: -1.4deg; } [data-piece="phone"] { --fx: 14px; --fy: 10px; --fr: 1.2deg; } [data-piece="email"] { --fx: -8px; --fy: 6px; --fr: .7deg; }
+[data-piece="city"] { --fx: 18px; --fy: 14px; --fr: -1deg; } [data-piece="product"] { --fx: 6px; --fy: 6px; --fr: .5deg; } [data-piece="message"] { --fx: -4px; --fy: 12px; --fr: -.8deg; } [data-piece="send"] { --fx: -18px; --fy: 16px; --fr: -2deg; }
+.enquiry-field { position: relative; display: flex; align-items: center; gap: 12px; min-height: 58px; padding: 0 22px; border-radius: 999px; border: 1px solid rgb(255 255 255 / .34); background: linear-gradient(135deg, rgb(255 255 255 / .15), rgb(255 255 255 / .05) 60%, rgb(255 255 255 / .09)); backdrop-filter: blur(14px) saturate(1.3); box-shadow: inset 0 1px 0 rgb(255 255 255 / .38), inset 0 -1px 0 rgb(0 0 0 / .1), 0 22px 44px -26px rgb(0 0 0 / .65); color: #f6f3e9; cursor: text; transition: border-color .25s, background .25s, box-shadow .25s; }
+.enquiry-field-wide { grid-column: 1 / -1; }
+.enquiry-field-area { align-items: flex-start; min-height: 150px; padding: 18px 22px; border-radius: 26px; }
+.enquiry-field:hover { border-color: rgb(255 255 255 / .5); }
+.enquiry-field:focus-within { border-color: rgb(233 191 119 / .9); background: linear-gradient(135deg, rgb(255 255 255 / .2), rgb(255 255 255 / .08) 60%, rgb(233 191 119 / .1)); box-shadow: inset 0 1px 0 rgb(255 255 255 / .45), 0 0 0 4px rgb(233 191 119 / .16), 0 22px 44px -26px rgb(0 0 0 / .65); }
+/* The gold point that marks the live field. */
+.enquiry-field::before { content: ""; position: absolute; left: 9px; top: 50%; width: 5px; height: 5px; margin-top: -2.5px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 10px 2px rgb(233 191 119 / .7); opacity: 0; scale: .4; transition: opacity .25s, scale .25s; }
+.enquiry-field-area::before { top: 26px; }
+.enquiry-field:focus-within::before { opacity: 1; scale: 1; }
+.enquiry-icon { flex: none; color: rgb(246 243 233 / .72); }
+.enquiry-field:focus-within .enquiry-icon { color: var(--gold); }
+.enquiry-field :is(input, select, textarea) { flex: 1; min-width: 0; width: 100%; border: 0; padding: 0; background: transparent; color: #f6f3e9; font: inherit; font-size: 17px; outline: none; }
+.enquiry-field :is(input, textarea)::placeholder { color: rgb(246 243 233 / .78); opacity: 1; }
+.enquiry-field select { appearance: auto; cursor: pointer; }
+.enquiry-field select:invalid { color: rgb(246 243 233 / .78); }
+.enquiry-field option { background: #414a39; color: #fff; }
+.enquiry-field textarea { resize: none; min-height: 112px; line-height: 1.5; }
+.enquiry-form .home-cta { grid-column: 1 / -1; justify-self: start; margin-top: 4px; min-height: 54px; padding: 10px 34px; font-size: 15px; font-weight: 500; }
+.enquiry-form button:disabled { cursor: wait; opacity: .6; }
+/* Points of light over the wall, drifting upward and fading, as in the reference. */
+.enquiry-sparks { position: absolute; inset: 0; overflow: clip; pointer-events: none; }
+.enquiry-spark { position: absolute; width: var(--s); height: var(--s); border-radius: 50%; background: radial-gradient(circle, rgb(255 246 220 / .95), rgb(255 232 180 / .4) 42%, transparent 70%); filter: blur(calc(var(--s) * .1)); opacity: 0; animation: enquiry-spark var(--d) ease-in-out var(--delay) infinite; animation-play-state: paused; }
+.home-ending[data-settled="true"] .enquiry-spark { animation-play-state: running; }
+@keyframes enquiry-spark { 0% { transform: translate(0, 0) scale(.5); opacity: 0; } 25% { opacity: .85; } 55% { transform: translate(var(--dx), var(--dy)) scale(1); opacity: .6; } 80% { opacity: .8; } 100% { transform: translate(calc(var(--dx) * 2), calc(var(--dy) * 2)) scale(.5); opacity: 0; } }
+.enquiry-status { font-size: 13px; line-height: 1.5; margin: 14px 0 0; min-height: 20px; color: #fff0ce; }
+.home-footer { position: absolute; inset: 0; opacity: var(--footer-opacity, 0); padding: 12svh 6vw; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.home-sign { width: clamp(210px, 25vw, 390px); margin-bottom: 4svh; }
+.home-sign-logo { display: block; width: 100%; height: auto; object-fit: contain; }
+/* The entrance stays unlit. Once it settles, time-based loops continue without further scroll input. */
+.home-footer[data-sign-lit="true"] .home-sign-logo { animation: home-sign-glow 2.8s ease-in-out infinite, home-sign-flicker 4.8s step-end infinite; }
+@keyframes home-sign-glow {
+  0%, 100% { filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 4px rgb(220 240 255 / .35)); }
+  50% { filter: drop-shadow(0 0 3px #fff) drop-shadow(0 0 16px rgb(220 240 255 / .85)); }
+}
+@keyframes home-sign-flicker {
+  0%, 12%, 55%, 100% { opacity: 1; }
+  8% { opacity: .32; }
+  51% { opacity: .6; }
+}
+.home-ending-static .home-footer .home-sign-logo { animation: none; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 9px rgb(220 240 255 / .6)); }
+@media (prefers-reduced-motion: reduce) { .home-footer .home-sign-logo, .home-footer[data-sign-lit] .home-sign-logo { animation: none; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 9px rgb(220 240 255 / .6)); } }
+.home-footer .home-heading { font-size: min(var(--home-title), 3.5vw); }
+.home-copyright { color: #d2b879; font-size: clamp(13px, 1.25vw, 20px); }
+@media (max-width: 1100px) { .enquiry-surface { padding-right: 7%; gap: 6%; grid-template-columns: 1fr 1fr; } .enquiry-deck { grid-template-columns: 1fr; } .enquiry-field-wide { grid-column: auto; } }
+@media (max-width: 1023px) {
+  /* The intro reflows on phones and tablets; its desktop line break would strand a short line. */
+  .desktop-break { display: none; }
+  .home-ending { background: var(--ink); }
+  /* The form and footer keep to the part of the screen the browser bars never cover; the wall behind fills it all. */
+  .enquiry-scene, .home-footer { bottom: var(--toolbar-gap); }
+  .ending-wall, .ending-film { height: 100%; }
+  /* The family room's strip, gliding to the wall as the camera zooms (EnquiryEnding sets --ending-focal). */
+  .ending-wall, .ending-film { object-position: var(--ending-focal, 50%) 100%; }
+  .enquiry-surface { grid-template-columns: 1fr; align-content: start; gap: 20px; padding: 92px 7% max(76px, calc(60px + env(safe-area-inset-bottom))); }
+  .enquiry-intro .home-heading { white-space: normal; font-size: clamp(30px, 7.5vw, 48px); }
+  .home-footer .home-heading { font-size: 7vw; }
+  .enquiry-intro > p { font-size: 15px; margin-top: 20px; }
+  /* Phones: flat, no perspective or scatter; the pieces still fly in, the sparks stay off. The short fields pair up
+     so the whole form fits one screen: an overflowing panel would scroll on its own before the page moves on. */
+  .enquiry-form { perspective: none; }
+  .enquiry-orbit, .enquiry-sparks { display: none; }
+  .enquiry-deck { grid-template-columns: 1fr 1fr; gap: 8px; transform: none; }
+  .enquiry-field-wide { grid-column: 1 / -1; }
+  .enquiry-piece { --fx: 0px; --fy: 0px; --fr: 0deg; animation: none; }
+  .enquiry-field { min-height: 46px; padding: 0 14px; gap: 8px; }
+  .enquiry-field :is(input, select, textarea) { font-size: 16px; }
+  .enquiry-field-area { min-height: 96px; padding: 12px 16px; border-radius: 20px; }
+  .enquiry-field textarea { min-height: 68px; height: 68px; }
+  .enquiry-form .home-cta { width: 100%; min-height: 44px; }
+}
+.home-ending-static { position: relative; inset: auto; visibility: visible; overflow: clip; --ending-blend: 1; }
+/* The static layout sets the finished values on each element that reads them (they do not inherit). */
+.home-ending-static :is(.enquiry-scene, .enquiry-orbit) { --form-opacity: 1; }
+.home-ending-static .home-footer { --footer-opacity: 1; }
+.home-ending-static .ending-shade { --wall-shade: .16; }
+.home-ending-static :is(.ending-wall, .ending-film) { --wall-framing: 1; }
+.home-ending-static .enquiry-scene, .home-ending-static .home-footer { position: relative; inset: auto; min-height: 100svh; }
+.home-ending-static .enquiry-surface { height: auto; min-height: 100svh; mask: none; pointer-events: auto; }
+.home-ending-static .enquiry-piece { --in: 1; animation: none; }
+.home-ending-static .enquiry-spark { display: none; }
+body:has(.product-world[data-splash-scene="shown"]) .story-root .story-status { visibility: hidden; }
+@media (max-height: 740px) { .enquiry-surface { align-content: start; padding-top: 90px; } }
+/* Narrow phones: a little less padding so the paired placeholders ("Phone number") read in full. */
+@media (max-width: 380px) { .enquiry-field:not(.enquiry-field-area) { padding: 0 11px; gap: 6px; } }
+/* Short portrait phones (an SE under Safari's bars): the invitation keeps its heading only and the form tightens,
+   so it still fits one screen. The aspect ratio leaves out a phone whose layout the keyboard has shrunk. */
+@media (max-width: 1023px) and (max-height: 640px) and (max-aspect-ratio: 3/4) {
+  .enquiry-surface { gap: 14px; padding-top: 84px; padding-bottom: max(56px, calc(40px + env(safe-area-inset-bottom))); }
+  .enquiry-intro > p { display: none; }
+  .enquiry-field-area { min-height: 72px; }
+  .enquiry-field textarea { min-height: 46px; height: 46px; }
+  .enquiry-status { margin-top: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .enquiry-surface { mask: none; } .enquiry-form, .enquiry-intro, .enquiry-deck { transform: none; } .enquiry-piece { --in: 1; animation: none; } .enquiry-spark { display: none; } }
+/* Landscape phones: the invitation on the left and a compact two-column form beside it, all on one screen;
+   the sign-off footer sized to the height instead of the width. Inputs stay at 16px so iOS does not zoom. */
+@media (max-width: 1023px) and (max-height: 500px) and (min-aspect-ratio: 16/9) {
+  .enquiry-surface { grid-template-columns: .8fr 1.2fr; align-items: center; align-content: center; gap: 28px; padding: 64px var(--page-gutter) 44px; }
+  .enquiry-intro .home-heading { font-size: 26px; }
+  .enquiry-intro > p { font-size: 13px; margin-top: 10px; }
+  .enquiry-deck { grid-template-columns: 1fr 1fr; gap: 6px 8px; }
+  .enquiry-field-wide { grid-column: 1 / -1; }
+  .enquiry-field { min-height: 38px; }
+  .enquiry-field-area { min-height: 56px; padding: 8px 16px; }
+  .enquiry-field textarea { min-height: 38px; height: 38px; }
+  .enquiry-form .home-cta { min-height: 40px; }
+  .home-footer { padding: 64px 6vw 44px; }
+  .home-sign { width: 140px; margin-bottom: 10px; }
+  .home-footer .home-heading { font-size: 24px; }
+  .home-copyright { font-size: 12px; }
+}
+
+/* The form's invitation and the closing sign-off use the story's chapter heading and body tokens as well. */
+.enquiry-intro .home-heading, .home-footer .home-heading { font-size: var(--chapter-title); line-height: var(--chapter-title-lh); letter-spacing: var(--chapter-title-ls); }
+/* Mobile (portrait and landscape phones): every section title after the hero at the desktop chapter size, clamp(26px, 3.32vw, 60px), tightly leaded. */
+@media (max-width: 767px), (max-width: 1023px) and (max-height: 500px) {
+  .enquiry-intro .home-heading, .home-footer .home-heading { font-size: var(--chapter-title); line-height: .977; }
+}

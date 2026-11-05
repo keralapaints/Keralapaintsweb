@@ -1,0 +1,46 @@
+/* Phone and tablet layout for the header, the story and the menu. */
+@media (max-width: 1023px) {
+  :root { --page-gutter: 6vw; --chapter-body: clamp(var(--text-base), 2vw, 20px); --chapter-body-lh: 1.55; }
+  .site-header { padding: env(safe-area-inset-top) var(--page-gutter) 0; --header-height: 72px; }
+  .brand { width: 94px; }
+  .story-scene { min-height: 100svh; align-items: flex-end; }
+  .scene-visual { transition: opacity 450ms ease; }
+  [data-in-view="false"] .scene-visual { opacity: .72; }
+  .scene-visual img { object-position: var(--mobile-focal); }
+  .scene-shade, .scene-4 .scene-shade, .scene-5 .scene-shade, .scene-6 .scene-shade, .scene-center .scene-shade, .scene-10 .scene-shade { background: linear-gradient(0deg, rgb(3 10 15 / .86), rgb(3 10 15 / .58) 35%, rgb(3 10 15 / .07) 78%); }
+  .scene-content, .scene-1 .scene-content { padding: 170px var(--page-gutter) 112px; }
+  .scene-1 { align-items: flex-start; }
+  .scene-1 .scene-content { padding-top: clamp(145px, 20svh, 205px); }
+  .scene-1 .scene-shade { background: linear-gradient(90deg, rgb(3 10 15 / .6), rgb(3 10 15 / .12)), linear-gradient(0deg, rgb(3 10 15 / .2), transparent 50%); }
+  .scene-1 .scene-heading { font-size: clamp(56px, 9vw, 92px); line-height: .94; margin-bottom: 26px; }
+  .scene-heading { margin-bottom: var(--space-5); }
+  .scene-body, .scene-1 .scene-body { font-size: var(--chapter-body); max-width: 75%; line-height: var(--chapter-body-lh); letter-spacing: var(--chapter-body-ls); }
+  .scene-body p { white-space: pre-line; }
+  .scene-actions { margin-top: 40px; gap: var(--space-5); }
+  .text-link { font-size: var(--text-xs); }
+  .scene-center .scene-content { padding-inline: var(--page-gutter); }
+  .scene-9 .scene-body { max-width: 85%; }
+  .scene-center .scene-body { font-size: clamp(var(--text-base), 2.2vw, 22px); max-width: 30em; letter-spacing: .035em; }
+  .question-eyebrow { font-size: var(--text-xs); letter-spacing: .14em; margin: var(--space-6) 0 var(--space-5); }
+  .story-status { padding-bottom: max(var(--space-5), env(safe-area-inset-bottom)); font-size: var(--text-xs); letter-spacing: .1em; background: linear-gradient(transparent, rgb(3 10 14 / .7)); }
+  .scroll-invitation { display: none; }
+  .story-total { display: block; }
+  .story-caption { gap: var(--space-2); }
+  .caption-rule { width: 20px; }
+  .menu-dialog { padding: var(--space-5) var(--page-gutter) var(--space-6); }
+  .menu-secondary { gap: var(--space-1) var(--space-5); }
+}
+
+@media (max-width: 480px) {
+  :root { --page-gutter: 7vw; --chapter-body: var(--text-base); }
+  .brand { width: 83px; }
+  .menu-trigger span { width: 20px; height: 2px; }
+  .scene-content, .scene-1 .scene-content { padding-bottom: 108px; }
+  .scene-1 .scene-heading { font-size: 16vw; }
+  .scene-body, .scene-1 .scene-body { max-width: 100%; font-size: var(--chapter-body); }
+  .scene-9 .scene-body { max-width: 100%; }
+  .scene-center .scene-body { font-size: var(--text-base); }
+  .scene-actions { gap: var(--space-5); }
+  .text-link { font-size: var(--text-xs); letter-spacing: .02em; }
+  .question-eyebrow { font-size: var(--text-xs); }
+}

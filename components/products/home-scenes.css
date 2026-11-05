@@ -1,0 +1,181 @@
+/* No z-index of its own: the room's picture and its copy layer separately (below), so a room's copy can stay above the next
+   room's picture while that room arrives (homeSceneTimeline copy). Pictures share z 8, above the splash; copy is z 9. */
+@property --home-copy { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --home-blend { syntax: "<number>"; inherits: false; initial-value: 0; }
+.home-scene { position: absolute; inset: 0; overflow: clip; visibility: hidden; pointer-events: none; color: #f6f3e9; }
+.home-scene:not(.home-scene-static) > .footage-window { z-index: 8; opacity: var(--home-blend); }
+.home-scene:not(.home-scene-static) > .home-copy { z-index: 9; }
+.home-poster, .home-film, .home-grade { position: absolute; inset: 0; width: 100%; height: 100%; }
+.home-poster, .home-film { object-fit: cover; object-position: 50% 100%; }
+.home-film { opacity: 0; }
+/* A single fallback camera position while the film is not ready (HomeScenes). */
+.home-poster-end { opacity: var(--home-still, 0); }
+.home-scene[data-ready="true"] .home-film { opacity: 1; }
+.home-grade { background: linear-gradient(180deg, rgb(4 10 10 / .16), transparent 65%, rgb(4 10 10 / .1)); }
+/* An opaque matching-frame cut from the splash, with identical lighting and crop. */
+.home-scene-living { background: var(--ink); }
+.home-scene-living .home-grade { background: linear-gradient(90deg, rgb(3 8 12 / .55), rgb(3 8 12 / .12) 38%, transparent 60%), linear-gradient(0deg, rgb(3 8 12 / .35), transparent 30%); }
+/* The measure of pages 13-16 of the brief (1547 x 871): a 62px heading (4vw, 7.1svh) and a 16px body (1.05vw, 1.85svh) set at 1.7. Every size is capped by the viewport height as well
+   as its width, so wide, short screens (a 1908 x 888 laptop) keep the brief's vertical rhythm and the button
+   stays on screen. Shared by the splash copy, the home scenes, the enquiry and the footer. */
+.product-world { --home-title: clamp(28px, min(4vw, 7svh), 72px); --home-body: clamp(13px, min(1.05vw, 1.85svh), 20px); }
+.home-copy { position: absolute; left: 8%; right: 8%; top: 25%; text-align: center; }
+.home-heading { margin: 0; font: 400 var(--home-title)/1.02 var(--font-display), Georgia, serif; letter-spacing: -.03em; }
+.home-heading > span { display: block; }
+.home-heading em { color: var(--gold); font-style: normal; }
+.home-description { margin: 0 auto; white-space: pre-line; font-size: var(--home-body); line-height: 1.7; color: rgb(246 243 233 / .92); }
+.home-scene-colour .home-copy { left: 20%; right: 43%; top: 21%; }
+.home-features { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; padding: 0; margin: 3.4svh auto 0; max-width: clamp(420px, 36vw, 560px); }
+.home-benefits-toggle { display: none; }
+/* Gate the entire disclosure with the scroll timeline, including its border and expanded content. */
+.home-benefits { opacity: var(--home-copy, 0); translate: 0 calc((1 - var(--home-copy, 0)) * 10px); }
+.home-features li { position: relative; padding: 0 8px; }
+.home-features li + li::before { content: ""; position: absolute; left: 0; top: 5px; bottom: 0; width: 1px; background: rgb(221 174 83 / .48); }
+.home-icon { display: grid; place-items: center; width: clamp(36px, min(3.5vw, 6svh), 60px); aspect-ratio: 1; margin: 0 auto min(15px, 1.7svh); border: 1px solid rgb(221 174 83 / .7); border-radius: 50%; color: #e6b65e; }
+.home-features h3 { font-size: clamp(11px, min(.78vw, 1.3svh), 14px); font-weight: 400; line-height: 1.55; white-space: pre-line; margin: 0; }
+.home-features p { font-size: clamp(11px, min(.74vw, 1.25svh), 13px); line-height: 1.8; white-space: pre-line; margin: min(14px, 1.6svh) 0 0; }
+.home-cta { display: inline-flex; align-items: center; justify-content: center; gap: 28px; min-height: 46px; padding: 10px 30px; margin-top: 4.5svh; border: 1px solid #bb9553; border-radius: 99px; color: #efbd62; text-transform: uppercase; letter-spacing: .09em; font-size: clamp(11px, .85vw, 15px); pointer-events: auto; background: rgb(20 24 14 / .08); transition: background .2s, border-color .2s; }
+.home-copy[inert] .home-cta { pointer-events: none; }
+.home-copy[inert] { overflow: hidden; pointer-events: none; }
+.home-cta:hover { background: rgb(223 180 99 / .14); border-color: #efbd62; }
+.home-cta:focus-visible { outline: 2px solid #fff3ce; outline-offset: 5px; }
+/* The sign-off is hand-lettered in the brief; the script face is loaded in app/layout.tsx. */
+.home-signoff { margin: 4svh 0 0; font: 400 clamp(26px, min(2.4vw, 4.2svh), 46px)/1.1 var(--font-script), "Brush Script MT", cursive; color: #eab35b; }
+.home-scene-family .home-copy { top: 23.5%; }
+/* The family headline's long second line runs at 3.5vw in the brief. */
+.home-scene-family .home-heading { font-size: min(var(--home-title), 3.5vw); }
+.home-scene-family .home-features { max-width: 520px; width: 40%; margin-top: 4.6svh; }
+.home-scene-family .home-cta { margin-top: 4.2svh; }
+.home-scene-static { position: relative; inset: auto; min-height: 100svh; opacity: 1; visibility: visible; }
+.home-scene-static :is(.home-grade, .home-benefits) { --home-copy: 1; }
+.pr-splash-copy { translate: none; transition: none; }
+@media (max-width: 1100px) {
+  .home-scene-colour .home-copy { left: 11%; right: 36%; }
+  .home-scene-family .home-features { width: 62%; }
+  .home-features li { padding: 0 8px; }
+}
+@media (max-width: 1023px) {
+  /* The film fills the screen throughout, including each matching-frame handoff. */
+  .home-poster, .home-film { height: 100%; object-position: 50% 100%; }
+  /* Follow the subject across the landscape sources (HomeScenes sets --home-focal from lib/media/phone-camera). */
+  .home-poster, .home-film { object-position: var(--home-focal, 50%) 100%; }
+  .home-scene-living .home-grade::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(3 10 15 / .2), transparent 42%); opacity: var(--home-copy); }
+  .home-scene-living .home-grade { opacity: 1; }
+  .home-copy, .home-scene-colour .home-copy, .home-scene-family .home-copy { top: clamp(100px, 14svh, 150px); bottom: auto; left: var(--page-gutter); right: var(--page-gutter); max-height: none; text-shadow: 0 2px 16px rgb(0 0 0 / .6); overflow: visible; pointer-events: auto; }
+  .home-copy { text-align: left; padding: 2px 0 8px; }
+  .home-description { max-width: 28em; margin-left: 0; }
+  .home-benefits-toggle { display: flex; align-items: center; justify-content: space-between; gap: 24px; width: 100%; min-height: 44px; margin-top: 10px; padding: 0; border: 0; border-bottom: 1px solid rgb(246 243 233 / .3); background: transparent; color: #f6f3e9; font: inherit; font-size: 13px; text-align: left; cursor: pointer; }
+  .home-benefits-toggle span { font-size: 22px; color: var(--gold); }
+  .home-benefits-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .home-benefits[data-expanded="false"] .home-benefits-content { display: none; }
+  .home-heading { font-size: clamp(26px, 7.4vw, 42px); }
+  .home-scene-family .home-heading { font-size: clamp(24px, 6.7vw, 38px); }
+  /* Phones reflow the body copy; the desktop line breaks would orphan single words. */
+  .home-description { white-space: normal; font-size: clamp(14px, 3.7vw, 17px); line-height: 1.5; }
+  .home-grade { background: linear-gradient(180deg, rgb(3 10 15 / .3), rgb(3 10 15 / .38) 24%, transparent 64%), linear-gradient(0deg, rgb(3 10 15 / .3), transparent 14%); opacity: calc(.15 + var(--home-copy) * .85); }
+  .home-scene-family .home-features { width: 100%; }
+  .home-features { grid-template-columns: 1fr 1fr; gap: 14px 16px; margin-top: 20px; max-width: 100%; text-align: left; }
+  .home-features li { padding: 0; display: grid; grid-template-columns: 32px 1fr; column-gap: 9px; align-items: center; }
+  .home-features li + li::before { display: none; }
+  .home-features p { grid-column: 2; white-space: normal; font-size: 12px; line-height: 1.4; margin: 4px 0 0; }
+  .home-features h3 { font-size: 11px; line-height: 1.35; letter-spacing: .02em; }
+  .home-icon { width: 32px; margin: 0; }
+  .home-icon svg { width: 22px; height: 22px; }
+  .home-cta, .home-scene-family .home-cta { margin-top: 18px; min-height: 44px; }
+  .home-signoff { margin-top: 16px; font-size: 28px; }
+  .home-scene-family .home-signoff { margin-top: 12px; font-size: 24px; }
+  .home-scene-static { min-height: max(760px, 100svh); }
+  .home-scene-static .home-copy { position: relative; inset: auto; max-height: none; overflow: visible; margin: 0 var(--page-gutter); padding: 36svh 0 64px; }
+}
+/* Very short screens: the sizes above already follow the height; only the spacing tightens further. */
+@media (max-height: 700px) and (min-width: 1024px) {
+  .home-copy, .home-scene-colour .home-copy, .home-scene-family .home-copy { top: 19%; }
+  .home-features, .home-scene-family .home-features { margin-top: 3svh; }
+  .home-signoff { margin-top: 2.5svh; }
+  .home-cta, .home-scene-family .home-cta { margin-top: 2.5svh; }
+}
+
+@media (max-width: 1023px) and (max-height: 740px) {
+  .home-features { gap: 10px 12px; margin-top: 14px; }
+  .home-heading, .home-scene-family .home-heading { font-size: clamp(24px, 6.5vw, 32px); }
+}
+/* Landscape phones: the copy takes the left column and the room keeps the rest, so the chair and the child stay clear. */
+@media (max-width: 1023px) and (max-height: 500px) and (min-aspect-ratio: 16/9) {
+  .home-copy, .home-scene-colour .home-copy, .home-scene-family .home-copy { top: 72px; right: 46%; max-height: calc(100svh - 72px - 44px); }
+  .home-heading, .home-scene-family .home-heading { font-size: 22px; }
+  .home-description { font-size: 13px; line-height: 1.45; }
+  .home-benefits-toggle { min-height: 36px; margin-top: 4px; }
+  .home-signoff, .home-scene-family .home-signoff { display: none; }
+  .home-cta, .home-scene-family .home-cta { margin-top: 10px; }
+}
+/* As in the story, the copy is never a scroller of its own: a swipe or wheel over it always moves the page. It is laid
+   out to fit the screen instead (short phones open the benefits in place of the description, below). */
+.home-scene .home-copy { overflow: visible; }
+
+
+/* One scene template for the whole journey: the rooms set their copy exactly like the story's chapters (app/styles/story.css
+   .scene-content): the chapter heading and body tokens, at the page gutter, vertically centred against a shade from
+   the left on larger screens. Portrait phones keep the copy at the top over the same shade mirrored from above:
+   the rooms' subjects (the chair, the child) stand at the foot of the frame, where the story's copy would sit. */
+.home-heading, .home-scene-family .home-heading { font-size: var(--chapter-title); line-height: var(--chapter-title-lh); letter-spacing: var(--chapter-title-ls); }
+.home-description { font-size: var(--chapter-body); line-height: var(--chapter-body-lh); letter-spacing: var(--chapter-body-ls); color: var(--chapter-body-color); }
+.home-description, .home-features, .home-scene-family .home-features { margin-left: 0; }
+@media (min-width: 1024px) {
+  .home-copy, .home-scene-colour .home-copy, .home-scene-family .home-copy { left: var(--page-gutter); right: auto; top: 0; bottom: 0; width: 42vw; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; text-align: left; }
+  .home-description { max-width: 42vw; }
+  .home-features, .home-scene-family .home-features { width: 100%; max-width: 560px; }
+  .home-features li:first-child { padding-left: 0; }
+  .home-grade, .home-scene-living .home-grade { background: linear-gradient(90deg, rgb(2 9 13 / .46) 0%, rgb(2 9 13 / .2) 33%, transparent 68%); opacity: 1; }
+}
+@media (max-width: 1023px) {
+  .home-description { max-width: 75%; white-space: normal; }
+  .home-grade, .home-scene-living .home-grade { background: linear-gradient(180deg, rgb(3 10 15 / .86), rgb(3 10 15 / .58) 35%, rgb(3 10 15 / .07) 78%); opacity: calc(.15 + var(--home-copy) * .85); }
+  .home-scene-living .home-grade::after { display: none; }
+}
+@media (max-width: 1023px) and (max-height: 500px) and (min-aspect-ratio: 16/9) {
+  .home-copy, .home-scene-colour .home-copy, .home-scene-family .home-copy { top: auto; bottom: 44px; }
+}
+/* Mobile (portrait and landscape phones): every section title after the hero at the desktop chapter size, clamp(26px, 3.32vw, 60px), tightly leaded. */
+@media (max-width: 767px), (max-width: 1023px) and (max-height: 500px) {
+  .home-heading, .home-scene-family .home-heading { font-size: var(--chapter-title); line-height: .977; }
+}
+
+/* The blue room that follows the splash carries its copy at the splash headline's place (product-world.css): on the
+   clear wall between the paint wave sweeping in from the left and the armchair at the right, a third of the way
+   down the frame, a little right of centre, centred text on every device. The film is anchored to the bottom edge
+   like the splash, so the same formula finds the same point of the frame. Last, so it wins over the layouts above. */
+.home-scene-living .home-copy { left: var(--page-gutter); right: var(--page-gutter); top: max(30%, calc(100% - max(68%, 39.25vw))); bottom: auto; width: auto; max-height: none; padding: 0; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; text-align: center; transform: translate(3vw, -50%); }
+.home-scene-living .home-description { max-width: min(34em, 80vw); margin: 0 auto; }
+@media (max-width: 1023px) {
+  .home-scene-living .home-heading { margin-bottom: var(--space-4); }
+  .home-scene-living .home-description { max-width: min(22em, 100%); text-wrap: balance; }
+}
+
+/* The red room follows page 15 of the brief on larger screens: the copy centred on the red wall, which fills the frame
+   up to the doorway at 70% of its width (the block's axis at 37% of the screen sits mid-wall on every frame fit),
+   the four benefits in a row beneath with their hairlines, and the button under them, all centred. Portrait phones
+   keep the chapter layout above, with the benefits behind their toggle. */
+@media (min-width: 1024px) {
+  .home-scene-colour .home-copy { left: 12%; right: auto; width: 50%; align-items: center; text-align: center; }
+  .home-scene-colour .home-description { max-width: 30em; margin: 0 auto; }
+  .home-scene-colour .home-features { margin-left: auto; margin-right: auto; }
+  .home-scene-colour .home-features li:first-child { padding-left: 8px; }
+}
+
+/* The family room follows page 16 of the brief on larger screens: the whole block centred on the screen, over the
+   clear green wall above the child (the bed at the left, the child and the plant at the foot of the frame): heading,
+   line, the four benefits with short labels, the script sign-off and the button, all centred. */
+@media (min-width: 1024px) {
+  .home-scene-family .home-copy { left: var(--page-gutter); right: var(--page-gutter); width: auto; align-items: center; text-align: center; }
+  .home-scene-family .home-description { max-width: 30em; margin: 0 auto; }
+  .home-scene-family .home-features { margin-left: auto; margin-right: auto; }
+  .home-scene-family .home-features li:first-child { padding-left: 8px; }
+}
+/* Short portrait phones: the expanded benefits stand in for the description, so the copy always fits the screen
+   above the room's subject and never needs to scroll. */
+@media (max-width: 1023px) and (max-height: 700px) {
+  .home-copy:has(.home-benefits[data-expanded="true"]) .home-description { display: none; }
+}
+@media (max-width: 767px) and (orientation: portrait) {
+  .home-scene-colour.home-scene-static { --home-focal: 12%; }
+}

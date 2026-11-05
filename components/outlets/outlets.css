@@ -1,0 +1,55 @@
+/* Find an Outlet (components/outlets): the search controls and the outlet cards, grouped by district. Prefix: ol-. */
+.ol-hero { min-height: 72svh; }
+.ol-list { padding-top: clamp(40px, 6svh, 72px); background: none; }
+
+/* Search, district and type: one bar that stays at the top while the list scrolls. */
+.ol-controls { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto; align-items: end; gap: var(--space-4); padding: var(--space-5); border: 1px solid var(--pp-line); border-radius: 22px; background: linear-gradient(160deg, rgb(255 255 255 / .05), rgb(255 255 255 / .01) 60%), var(--ink); }
+.ol-field { display: grid; gap: var(--space-2); min-width: 0; }
+.ol-field label, .ol-types legend { font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.ol-field :is(input, select) { width: 100%; min-height: 48px; padding: 0 var(--space-5); border: 1px solid rgb(246 243 233 / .2); border-radius: 99px; font: inherit; font-size: var(--text-base); color: var(--ivory); background: rgb(255 255 255 / .04); transition: border-color 200ms ease, background 200ms ease; }
+.ol-field select { appearance: none; padding-right: 44px; background-image: linear-gradient(45deg, transparent 50%, var(--gold) 50%), linear-gradient(135deg, var(--gold) 50%, transparent 50%); background-position: calc(100% - 22px) 50%, calc(100% - 17px) 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; }
+.ol-field select option { color: #111; }
+.ol-field :is(input, select):focus { outline: none; border-color: var(--gold); background-color: rgb(255 255 255 / .07); }
+.ol-field input::placeholder { color: rgb(246 243 233 / .45); }
+.ol-types { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; border: 0; }
+.ol-types legend { width: 100%; margin-bottom: var(--space-2); padding: 0; }
+.ol-types button { min-height: 48px; padding: 0 var(--space-5); border: 1px solid rgb(246 243 233 / .2); border-radius: 99px; font: inherit; font-size: var(--text-sm); color: rgb(246 243 233 / .8); background: transparent; cursor: pointer; transition: background 200ms ease, border-color 200ms ease, color 200ms ease; }
+.ol-types button:hover { border-color: rgb(215 165 83 / .6); color: var(--ivory); }
+.ol-types button[aria-pressed="true"] { border-color: transparent; color: #241a07; background: linear-gradient(135deg, #f3d77c, #ddb04f 55%, #c99a3a); }
+.ol-types button:focus-visible, .ol-clear:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+.ol-count { display: flex; align-items: center; gap: var(--space-5); margin: var(--space-6) 0 0; font-size: var(--text-xs); letter-spacing: .14em; text-transform: uppercase; color: rgb(246 243 233 / .6); }
+.ol-clear { padding: 0; border: 0; border-bottom: 1px solid rgb(239 189 98 / .5); font: inherit; letter-spacing: inherit; text-transform: inherit; color: #efbd62; background: none; cursor: pointer; }
+.ol-empty { margin: var(--space-7) 0 0; padding: var(--space-7); border: 1px dashed var(--pp-line); border-radius: 22px; text-align: center; color: var(--text-secondary); }
+
+/* A district and its outlets. */
+.ol-district { margin-top: clamp(40px, 6svh, 72px); scroll-margin-top: 200px; }
+.ol-district-name { display: flex; align-items: baseline; gap: var(--space-4); margin: 0 0 var(--space-5); padding-bottom: var(--space-4); border-bottom: 1px solid var(--pp-line); font-family: var(--font-display), Georgia, serif; font-size: clamp(28px, 2.4vw, 40px); font-weight: 400; text-transform: uppercase; }
+.ol-district-name span { font-family: var(--font-body), Arial, sans-serif; font-size: var(--text-xs); letter-spacing: .14em; color: var(--gold); }
+.ol-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: clamp(12px, 1.4vw, 20px); margin: 0; padding: 0; list-style: none; }
+.ol-card { display: flex; flex-direction: column; gap: var(--space-2); padding: clamp(20px, 2vw, 28px); border: 1px solid var(--pp-line); border-radius: 22px; background: linear-gradient(160deg, rgb(255 255 255 / .05), rgb(255 255 255 / .01) 60%); scroll-margin-top: 200px; transition: border-color 300ms ease, translate 400ms var(--pp-ease); }
+.ol-card:hover { border-color: rgb(215 165 83 / .45); translate: 0 -3px; }
+.ol-card[data-type="factory"] { border-color: rgb(215 165 83 / .3); background: linear-gradient(160deg, rgb(215 165 83 / .09), rgb(255 255 255 / .01) 60%); }
+.ol-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--space-2); }
+.ol-tag { padding: 4px 10px; border: 1px solid rgb(246 243 233 / .2); border-radius: 99px; font-size: 10px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: rgb(246 243 233 / .72); }
+.ol-card[data-type="factory"] .ol-tag:first-child { border-color: rgb(215 165 83 / .5); color: var(--gold); }
+.ol-tag--new { border-color: transparent; color: #241a07; background: #efbd62; }
+.ol-card h3 { margin: 0; font-family: var(--font-display), Georgia, serif; font-size: clamp(22px, 1.7vw, 28px); font-weight: 400; line-height: 1.15; }
+.ol-place { margin: 0; font-size: var(--text-xs); letter-spacing: .12em; text-transform: uppercase; color: rgb(246 243 233 / .6); }
+.ol-card address { flex: 1; margin: var(--space-2) 0 0; font-style: normal; font-size: var(--text-sm); line-height: 1.6; color: var(--text-secondary); }
+.ol-pin { white-space: nowrap; }
+.ol-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: var(--space-4); }
+.ol-button { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 var(--space-4); border: 1px solid rgb(215 165 83 / .55); border-radius: 99px; font-size: var(--text-sm); color: #efbd62; white-space: nowrap; transition: background 200ms ease, border-color 200ms ease; }
+.ol-button:hover { border-color: #efbd62; background: rgb(223 180 99 / .12); }
+.ol-button--ghost { border-color: rgb(246 243 233 / .22); color: rgb(246 243 233 / .85); }
+.ol-button--ghost:hover { border-color: rgb(246 243 233 / .5); background: rgb(255 255 255 / .05); }
+.ol-button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+@media (max-width: 1023px) {
+  .ol-controls { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .ol-field--search { grid-column: 1 / -1; }
+}
+@media (max-width: 599px) {
+  .ol-controls { position: static; grid-template-columns: minmax(0, 1fr); padding: var(--space-4); }
+  .ol-types button { flex: 1; padding: 0 var(--space-3); }
+}

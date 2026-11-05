@@ -1,0 +1,10 @@
+# Cache headers for Netlify / Cloudflare Pages style hosts (Vercel reads vercel.json). Frame packs carry a content
+# hash in their URL (?v=), so they can be cached for a year; the other media for a day.
+/frames/*
+  Cache-Control: public, max-age=31536000, immutable
+/films/*
+  Cache-Control: public, max-age=86400
+/stills/*
+  Cache-Control: public, max-age=86400
+/images/*
+  Cache-Control: public, max-age=86400

@@ -1,0 +1,37 @@
+/* Design tokens, element defaults and page-level states. */
+:root {
+  --ink: #071014;
+  --ivory: #f6f3e9;
+  --gold: #d7a553;
+  --muted: #d9dbd6;
+  --page-gutter: 7.8vw;
+  /* Type scale (12 14 16 18 20 24 ...) and 4/8px spacing rhythm: labels never drop below --text-xs, body never below --text-base. */
+  --text-xs: 12px; --text-sm: 14px; --text-base: 16px; --text-md: 18px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+  --tap: 44px;
+  /* Timeline units per screen of scroll: phones get extra reading distance (lib/scroll-scale.ts, PHONE_SCROLL_SCALE). */
+  --scroll-scale: 1;
+  /* How much of the screen the browser bars cover right now (iOS Safari, Chrome): pinned screens fill the large
+     viewport, and anything pinned to their bottom edge is lifted by this much, so it sits just above the bars while
+     they show and drops to the very bottom once they slide away (the dynamic viewport follows the bars). */
+  --toolbar-gap: calc(100lvh - 100dvh);
+  --text-secondary: rgb(246 243 233 / .72);
+  /* Chapter copy: the story headings and body (scene 10 "From latex to living surface") set the measure
+     that the splash scene, the home scenes, the enquiry and the footer all share. */
+  --chapter-title: clamp(26px, 3.32vw, 60px); --chapter-title-lh: 1.02; --chapter-title-ls: -.03em;
+  --chapter-body: clamp(var(--text-base), 1.25vw, 24px); --chapter-body-lh: 1.5; --chapter-body-ls: -.015em; --chapter-body-color: #f0f0e9;
+  --chapter-copy-gap: var(--space-5);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--ink); scrollbar-width: thin; scrollbar-color: #6c7778 #071014; }
+body { margin: 0; background: var(--ink); color: var(--ivory); font-family: var(--font-body), Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body, button, a { -webkit-tap-highlight-color: transparent; }
+button, a { touch-action: manipulation; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-offset: 8px; }
+::selection { background: #d7a553; color: #071014; }
+.menu-open, .menu-open body { overflow: hidden; }
+.is-loading, .is-loading body { overflow: hidden; }

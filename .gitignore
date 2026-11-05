@@ -1,0 +1,13 @@
+node_modules/
+.next/
+out/
+.env*
+!.env.example
+*.tsbuildinfo
+tmp/
+output/
+next-env.d.ts
+docs/
+tests/
+scripts/
+.claude/

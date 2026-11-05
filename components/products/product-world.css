@@ -1,0 +1,303 @@
+.product-world {
+  /* The hero bucket: artwork fitted into a 4:5 frame, where the bucket spans 28.6-71.4% across and 24.2-68.5% down. */
+  --pr-frame-h: 96svh;
+  --pr-frame-w: calc(var(--pr-frame-h) * .8);
+  --pr-bucket-y: 46.4%;
+  /* Where the centred bucket's middle sits in the viewport. */
+  --pr-centre: 63svh;
+  --pr-frame-top: calc(var(--pr-centre) - var(--pr-frame-h) * .464);
+  /* Copy shares the story's left edge. */
+  --pr-gutter: var(--page-gutter);
+  --pr-ease: cubic-bezier(.22, 1, .36, 1);
+  /* Scroll range of the pinned stage in viewport heights (set from lib/product/product-scroll). */
+  --pr-range: 4;
+  /* The horizontal loop occupies one screen; page scroll continues normally. */
+  position: relative; z-index: 16;
+  height: 100svh;
+  background: #05090c; color: #f1f0e7;
+}
+.pr-stage { position: relative; height: 100lvh; overflow: clip; isolation: isolate; }
+.pr-background, .pr-background > img, .pr-background video, .pr-grade { position: absolute; inset: 0; width: 100%; height: 100%; }
+.pr-background { z-index: -1; }
+/* Every backdrop film frames its subject (shell, peacock, roots, leaf...) about 78% across: anchoring the crop at that
+   point keeps the subject on the right, clear of the copy, whatever the screen's shape. */
+.pr-background { --pr-focus: 78%; }
+.pr-background > img, .pr-background video { object-fit: cover; object-position: var(--pr-focus) 50%; }
+.pr-background video { opacity: 0; transition: opacity 650ms ease; }
+.pr-background video.pr-video-decoded { opacity: 1; }
+.pr-grade { background: linear-gradient(90deg, rgb(3 8 12 / .82), rgb(3 8 12 / .38) 30%, rgb(3 8 12 / .12) 50%, rgb(3 8 12 / .38) 72%, rgb(3 8 12 / .82)), linear-gradient(0deg, rgb(3 8 12 / .92), rgb(3 8 12 / .42) 26%, rgb(3 8 12 / .05) 55%, rgb(3 8 12 / .5)); }
+
+/* Counter and copy, top left. */
+.pr-counter { position: absolute; left: var(--pr-gutter); top: 14.5%; margin: 0; z-index: 3; font-size: clamp(var(--text-md), 1.3vw, 22px); font-weight: 300; letter-spacing: .02em; color: #f1f0e7; }
+.pr-counter small { font-size: max(var(--text-xs), .62em); letter-spacing: .08em; opacity: .55; }
+/* One title column for every product: sized in title ems so the longest single word (THERMOSTAT, 4.64em condensed) always fits. */
+.pr-copy { --pr-title: clamp(38px, 3.8vw, 72px); --pr-title-col: calc(var(--pr-title) * 4.75); position: absolute; left: var(--pr-gutter); top: 19.5%; z-index: 3; display: grid; grid-template-columns: var(--pr-title-col) minmax(260px, 18vw); align-items: start; column-gap: clamp(20px, 1.9vw, 32px); }
+.pr-copy h2 { font-family: var(--font-display), Georgia, serif; font-size: var(--pr-title); font-weight: 400; text-transform: uppercase; letter-spacing: .012em; line-height: .96; margin: 0; max-width: 6.2em; padding-right: clamp(20px, 1.9vw, 32px); border-right: 1px solid rgb(246 243 233 / .55); }
+.pr-detail { padding-top: .25em; }
+.pr-description { margin: 0; font-size: clamp(var(--text-sm), .95vw, var(--text-base)); line-height: 1.5; letter-spacing: .005em; color: rgb(246 243 233 / .85); }
+
+/* Brand line, top right. */
+.pr-tagline { position: absolute; right: var(--pr-gutter); top: 19.5%; z-index: 3; margin: 0; font-family: var(--font-display), Georgia, serif; font-style: italic; font-weight: 400; font-size: clamp(var(--text-md), 1.35vw, 24px); line-height: 1.22; letter-spacing: .01em; color: rgb(246 243 233 / .78); }
+
+/* The ring of buckets. */
+.pr-carousel { position: absolute; inset: 0; z-index: 1; touch-action: pan-y; cursor: grab; user-select: none; }
+.pr-carousel:active { cursor: grabbing; }
+/* A sideways drag carries the ring with the finger (hooks/useCarouselDrag sets --pr-drag); it eases back when released. */
+.pr-carousel { translate: var(--pr-drag, 0px) 0; transition: translate 420ms var(--pr-ease); }
+.pr-carousel[data-dragging] { transition: none; }
+.pr-slot { pointer-events: none; }
+.pr-floor { position: absolute; left: 22%; right: 22%; bottom: 7%; height: 22%; background: radial-gradient(ellipse at 50% 100%, rgb(255 236 205 / .26), rgb(255 236 205 / .06) 38%, transparent 66%); filter: blur(10px); }
+.pr-carousel::before { content: ""; position: absolute; left: 50%; top: calc(var(--pr-centre) + var(--pr-frame-h) * .215); width: calc(var(--pr-frame-w) * .5); height: calc(var(--pr-frame-h) * .035); translate: -50% -50%; border-radius: 50%; background: radial-gradient(ellipse, rgb(0 4 8 / .8), rgb(0 4 8 / .35) 45%, transparent 72%); filter: blur(6px); }
+.pr-slot, .pr-hero { position: absolute; left: 50%; top: var(--pr-frame-top); width: var(--pr-frame-w); height: var(--pr-frame-h); margin-left: calc(var(--pr-frame-w) / -2); transform-origin: 50% var(--pr-bucket-y); }
+.pr-slot { --pr-dx-abs: 0vw; --pr-dy: 0svh; --pr-scale: 1; --pr-tilt-abs: -10deg; --pr-yaw: 0deg; --pr-shade: 1.1; --pr-sat: 1.05; --pr-shadow: .6; z-index: 5; opacity: 1; transform: translate(var(--pr-dx), var(--pr-dy)) perspective(1400px) rotateY(var(--pr-yaw)) rotate(var(--pr-tilt)) scale(var(--pr-scale)); filter: brightness(var(--pr-shade)) saturate(var(--pr-sat)); transition: transform 900ms var(--pr-ease), opacity 450ms ease, filter 900ms ease; will-change: transform; }
+.pr-slot img { position: absolute; inset: 0; width: calc(100% * var(--pr-pack-scale, 1)); height: calc(100% * var(--pr-pack-scale, 1)); left: calc((1 - var(--pr-pack-scale, 1)) * 50%); top: calc((1 - var(--pr-pack-scale, 1)) * 46.4% + var(--pr-pack-y, 0%)); object-fit: contain; filter: drop-shadow(0 26px 30px rgb(0 4 8 / var(--pr-shadow))); transition: opacity var(--pr-entrance) ease var(--pr-slot-delay, 0ms), translate var(--pr-entrance) var(--pr-ease) var(--pr-slot-delay, 0ms), scale var(--pr-entrance) var(--pr-ease) var(--pr-slot-delay, 0ms), filter 900ms ease; }
+/* Entrance: every bucket in the ring rises in exactly as the copy and the featured bucket do, the nearest neighbours first. */
+.product-world:not([data-revealed="true"]):not([data-switching="true"]) .pr-slot img { opacity: 0; translate: 0 20px; scale: .985; }
+.pr-slot[data-offset="1"] img, .pr-slot[data-offset="-1"] img { --pr-slot-delay: 90ms; }
+.pr-slot[data-offset="2"] img, .pr-slot[data-offset="-2"] img { --pr-slot-delay: 180ms; }
+.pr-slot[data-offset="3"] img, .pr-slot[data-offset="-3"] img { --pr-slot-delay: 270ms; }
+.pr-slot::before { content: ""; position: absolute; left: 50%; top: var(--pr-bucket-y); width: 78%; height: 58%; translate: -50% -50%; border-radius: 50%; background: radial-gradient(ellipse, rgb(255 232 196 / .3), rgb(255 232 196 / .1) 42%, transparent 70%); filter: blur(26px); opacity: 0; transition: opacity 900ms ease; pointer-events: none; }
+.pr-slot[data-offset="0"]::before { opacity: 1; }
+/* A balanced arc gives wide cartons and narrow tins the same breathing room. */
+.pr-slot:not([data-offset^="-"]) { --pr-dx: var(--pr-dx-abs); --pr-tilt: var(--pr-tilt-abs); }
+.pr-slot[data-offset^="-"] { --pr-dx: calc(-1 * var(--pr-dx-abs)); --pr-tilt: calc(-1 * var(--pr-tilt-abs)); }
+.pr-slot[data-offset="0"] { --pr-tilt: 0deg; }
+/* Spacing never drops below a share of the bucket frame, so narrow screens show fewer buckets instead of squeezing them; wide screens keep their viewport-based spread. */
+.pr-slot[data-offset="1"], .pr-slot[data-offset="-1"] { --pr-dx-abs: max(calc(var(--pr-frame-w) * .43), 19vw); --pr-scale: .74; --pr-shade: .38; --pr-sat: .62; --pr-shadow: .32; z-index: 4; }
+.pr-slot[data-offset="2"], .pr-slot[data-offset="-2"] { --pr-dx-abs: max(calc(var(--pr-frame-w) * .79), 35vw); --pr-scale: .64; --pr-shade: .24; --pr-sat: .48; --pr-shadow: .22; z-index: 3; }
+.pr-slot[data-offset="3"], .pr-slot[data-offset="-3"] { --pr-dx-abs: max(calc(var(--pr-frame-w) * 1.1), 49vw); --pr-scale: .55; --pr-shade: .16; --pr-sat: .36; --pr-shadow: .16; z-index: 2; opacity: .8; }
+.pr-slot[data-offset="-1"] { --pr-dy: 2svh; --pr-tilt: 4deg; --pr-yaw: -8deg; }
+.pr-slot[data-offset="-2"] { --pr-dy: 3svh; --pr-tilt: 6deg; --pr-yaw: -14deg; }
+.pr-slot[data-offset="-3"] { --pr-dy: 4svh; --pr-tilt: 8deg; --pr-yaw: -20deg; }
+.pr-slot[data-offset="1"] { --pr-dy: 2svh; --pr-tilt: -4deg; --pr-yaw: 8deg; }
+.pr-slot[data-offset="2"] { --pr-dy: 3svh; --pr-tilt: -6deg; --pr-yaw: 14deg; }
+.pr-slot[data-offset="3"] { --pr-dy: 4svh; --pr-tilt: -8deg; --pr-yaw: 20deg; }
+.pr-slot img { animation: pr-bucket-float 6s ease-in-out infinite; animation-play-state: paused; }
+.pr-slot:nth-child(2n) img { animation-delay: -2s; }
+.pr-slot:nth-child(3n) img { animation-delay: -4s; }
+[data-idling="true"] .pr-slot:not([data-hidden]) img { animation-play-state: running; }
+@keyframes pr-bucket-float { 0%, 100% { transform: translateY(5px) rotate(-.5deg); } 50% { transform: translateY(-5px) rotate(.5deg); } }
+.pr-slot[data-hidden] { --pr-dx: calc(var(--pr-offset) * max(calc(var(--pr-frame-w) * .43), 19vw)); --pr-scale: .5; --pr-shade: .2; --pr-sat: .4; opacity: 0; z-index: 1; }
+/* The ring stays visible through selection; the separate hero only dips out and re-enters on a switch. */
+.pr-hero { z-index: 6; pointer-events: none; }
+.pr-hero img { position: absolute; inset: 0; width: calc(100% * var(--pr-pack-scale, 1)); height: calc(100% * var(--pr-pack-scale, 1)); left: calc((1 - var(--pr-pack-scale, 1)) * 50%); top: calc((1 - var(--pr-pack-scale, 1)) * 46.4% + var(--pr-pack-y, 0%)); object-fit: contain; opacity: 0; filter: drop-shadow(0 30px 34px rgb(0 4 8 / .62)); transition: opacity 400ms ease; animation: pr-bucket-float 6s ease-in-out infinite; animation-play-state: paused; }
+[data-hero-ready="true"] .pr-hero img { opacity: 1; }
+[data-idling="true"] .pr-hero img { animation-play-state: running; }
+
+/* Entrance and product switch: the copy and the hero bucket dip out and re-enter while the ring slides. */
+.pr-hero, .pr-copy, .pr-tagline, .pr-counter { opacity: 0; transition: opacity var(--pr-entrance) ease, translate var(--pr-entrance) var(--pr-ease), scale var(--pr-entrance) var(--pr-ease); translate: 0 20px; scale: .985; }
+.pr-hero { transform-origin: 50% var(--pr-bucket-y); }
+[data-revealed="true"] :is(.pr-copy, .pr-tagline, .pr-counter) { opacity: 1; translate: 0 0; scale: 1; }
+[data-switching="true"] :is(.pr-hero, .pr-copy) { opacity: 0; translate: 0 14px; scale: .99; transition-duration: var(--pr-switch); }
+
+/* Previous and next. */
+.pr-arrow { position: absolute; top: 52%; z-index: 7; width: 56px; height: 56px; margin: 0; padding: 0; border: 1px solid rgb(246 243 233 / .55); border-radius: 50%; background: rgb(3 8 12 / .3); backdrop-filter: blur(8px); color: var(--ivory); display: grid; place-items: center; translate: 0 -50%; transition: background 220ms ease, border-color 220ms ease, transform 220ms var(--pr-ease); }
+.pr-arrow-prev { left: 3%; }
+.pr-arrow-next { right: 3%; }
+.pr-arrow:hover { background: rgb(246 243 233 / .14); border-color: var(--ivory); }
+.pr-arrow:active { transform: scale(.94); }
+.pr-arrow:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+
+/* The range slider: a hairline across the foot of the stage, one tick per product, a knob that scrubs between them. */
+.pr-slider { position: absolute; left: 50%; bottom: 5.5%; z-index: 7; width: clamp(280px, 38vw, 560px); padding: 0 34px; translate: -50% 0; --pr-knob: 0; cursor: pointer; touch-action: pan-y; user-select: none; -webkit-tap-highlight-color: transparent; outline: none; }
+.pr-slider-track { position: relative; height: 44px; }
+.pr-slider-track::before, .pr-slider-track::after { content: ""; position: absolute; left: 0; top: 50%; height: 1px; pointer-events: none; }
+.pr-slider-track::before { right: 0; background: rgb(246 243 233 / .2); transition: background 300ms ease; }
+.pr-slider-track::after { width: calc(var(--pr-knob) * 100%); background: linear-gradient(90deg, rgb(246 243 233 / .2), rgb(246 243 233 / .95)); }
+.pr-tick { position: absolute; left: calc(var(--pr-tick) * 100%); top: 50%; width: 3px; height: 3px; translate: -50% -50%; border-radius: 50%; background: rgb(246 243 233 / .38); transition: background 400ms ease, scale 400ms var(--pr-ease); }
+.pr-tick[data-lit] { background: var(--ivory); }
+.pr-knob { position: absolute; left: calc(var(--pr-knob) * 100%); top: 50%; z-index: 1; width: 12px; height: 12px; translate: -50% -50%; border-radius: 50%; background: var(--ivory); box-shadow: 0 0 0 1px rgb(215 165 83 / 0), 0 0 0 7px rgb(215 165 83 / 0), 0 2px 12px rgb(0 4 8 / .55); transition: box-shadow 280ms ease, scale 320ms var(--pr-ease); }
+.pr-slider:hover .pr-knob, .pr-slider:focus-visible .pr-knob { box-shadow: 0 0 0 1px rgb(215 165 83 / .85), 0 0 0 7px rgb(215 165 83 / .12), 0 2px 12px rgb(0 4 8 / .55); }
+.pr-slider[data-dragging="true"] .pr-knob { scale: 1.4; box-shadow: 0 0 0 1px var(--gold), 0 0 0 10px rgb(215 165 83 / .16), 0 0 22px rgb(215 165 83 / .6); }
+.pr-slider:focus-visible .pr-slider-track::before { background: rgb(215 165 83 / .55); }
+/* The label slides its anchor along itself so it never overhangs either end of the track. */
+.pr-slider-label { position: absolute; left: calc(var(--pr-knob) * 100%); bottom: calc(50% + 15px); translate: calc(var(--pr-knob) * -100%) 0; white-space: nowrap; font-size: var(--text-xs); line-height: 1; letter-spacing: .14em; text-transform: uppercase; color: rgb(246 243 233 / .85); pointer-events: none; }
+.pr-slider-label > span { display: inline-block; animation: pr-label-in 460ms var(--pr-ease) both; }
+.pr-slider[data-dragging="true"] .pr-slider-label { color: var(--ivory); }
+@keyframes pr-label-in { from { opacity: 0; translate: 0 6px; } }
+
+
+
+@media (min-width: 1024px) {
+  .pr-copy { column-gap: 1.7vw; }
+  .pr-description { font-size: var(--text-sm); line-height: 1.5; letter-spacing: 0; }
+  .pr-copy h2 { width: 135%; max-width: none; padding-right: 0; border: 0; letter-spacing: -.04em; transform: scaleX(.74); transform-origin: left top; }
+  /* The hairline beside the copy runs the full depth of the description, in the consultation button's gold (.consult-cta). */
+  .pr-description { position: relative; }
+  .pr-description::before { content: ""; position: absolute; left: -1.7vw; top: 0; bottom: 0; width: 1px; background: linear-gradient(180deg, #f3d77c, #ddb04f 55%, #c99a3a); }
+}
+
+@media (max-width: 1280px) and (min-width: 1024px) {
+  .product-world { --pr-frame-h: 80svh; --pr-centre: 63svh; }
+  .pr-copy { --pr-title: clamp(34px, 4.3vw, 60px); grid-template-columns: var(--pr-title-col) minmax(180px, 23vw); }
+  .pr-tagline { right: 8%; font-size: var(--text-md); }
+}
+@media (max-width: 1023px) {
+  .product-world { height: auto; --pr-frame-h: 68svh; --pr-centre: 70svh; }
+  /* The ring, arrows and slider are pinned from the bottom exactly as on desktop; the text sits a fixed gap above the bucket top. */
+  .pr-stage { position: relative; height: 100lvh; padding: 112px var(--page-gutter) calc(100lvh - var(--pr-centre) + var(--pr-frame-h) * .222 + var(--space-5)); display: flex; flex-direction: column; justify-content: flex-end; }
+  /* The copy sits mid-screen on phones, over the brightest part of the backdrop: hold the grade darker through that band and lift the text off it. */
+  .pr-grade { background: linear-gradient(0deg, rgb(3 8 12 / .72), rgb(3 8 12 / .48) 36%, rgb(3 8 12 / .32) 62%, rgb(3 8 12 / .1) 84%, rgb(3 8 12 / .3)); }
+  .pr-counter, .pr-copy { text-shadow: 0 1px 2px rgb(3 8 12 / .7), 0 2px 18px rgb(3 8 12 / .55); }
+  .pr-description { color: rgb(246 243 233 / .94); }
+  .pr-counter { position: relative; top: auto; left: auto; margin-bottom: var(--space-3); font-size: var(--text-md); }
+  .pr-copy { position: relative; top: auto; left: auto; display: block; }
+  .pr-copy h2 { font-size: clamp(36px, 11vw, 56px); max-width: none; padding-right: 0; border-right: 0; }
+  .pr-detail { padding-top: 0; }
+  .pr-description { font-size: var(--text-base); line-height: 1.55; }
+  .pr-tagline { display: none; }
+  .pr-carousel::before { width: 30vw; height: 3vw; }
+  .pr-floor { bottom: 10%; left: 5%; right: 5%; height: 18%; }
+  .pr-slot[data-offset="1"], .pr-slot[data-offset="-1"] { --pr-dx-abs: max(calc(var(--pr-frame-w) * .5), 38vw); --pr-scale: .64; }
+  .pr-slot[data-offset="-1"] { --pr-dy: 2svh; }
+  .pr-slot[data-offset="1"] { --pr-dy: 2svh; }
+  .pr-slot[data-offset="2"], .pr-slot[data-offset="-2"] { --pr-dx-abs: var(--pr-frame-w); --pr-scale: .52; opacity: 0; }
+  .pr-slot[data-offset="3"], .pr-slot[data-offset="-3"] { --pr-dx-abs: calc(var(--pr-frame-w) * 1.5); opacity: 0; }
+  .pr-arrow { top: var(--pr-centre); translate: 0 -50%; width: var(--tap); height: var(--tap); }
+  .pr-arrow-prev { left: var(--page-gutter); }
+  .pr-arrow-next { right: var(--page-gutter); }
+  .pr-slider { width: calc(100% - var(--page-gutter) * 2); padding: 0 22px; bottom: calc(max(58px, calc(40px + env(safe-area-inset-bottom))) + var(--toolbar-gap)); }
+  .pr-slider-track { height: var(--tap); }
+}
+@media (prefers-reduced-motion: reduce) { .product-world *, .product-world *::before, .product-world *::after { transition: none !important; animation: none !important; } }
+
+/* Touch scrolls natively: the carousel is a snap stop a fling may not pass over (--pr-stop, in Product Range units,
+   set by ProductWorld from carouselStop in lib/product/product-scroll), so a fast scroll rests on it and the next
+   scroll leaves it. */
+.pr-stop { position: absolute; left: 0; top: calc(var(--pr-stop, 1.4) * var(--scroll-scale) * 100lvh); width: 1px; height: 1px; pointer-events: none; }
+/* Native touch and smooth wheel input both pass through without a forced snap or input lock. */
+
+/* Values written every frame of the entrance and the room's opening. They do not inherit: the script writes them on each
+   element that reads them (useProductReveal, ProductSplash), so a frame restyles those few elements, not the hundreds
+   inside the stage. An inherited custom property on the stage cost a phone 70-110 ms of style work per frame. */
+@property --pr-entry { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --pr-room { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --pr-outgoing-copy { syntax: "<number>"; inherits: false; initial-value: 1; }
+
+/* Entrance: a full-width collection rises from the foot of the screen. No image mask or blur. */
+[data-cinematic="true"] + .product-world { margin-top: -200lvh; height: calc((var(--pr-range) * var(--scroll-scale) + 1) * 100lvh); background: transparent; pointer-events: none; }
+[data-cinematic="true"] + .product-world .pr-stage { position: sticky; top: 0; background: #05090c; pointer-events: auto; }
+.product-world[data-splash="revealing"] .pr-stage { opacity: var(--pr-entry, 0); transform: translateY(calc((1 - var(--pr-entry, 0)) * 28px)); }
+/* Let the collection establish itself before its reading and navigation layers settle. */
+.product-world[data-splash="revealing"] :is(.pr-counter, .pr-copy, .pr-tagline) { filter: opacity(clamp(0, calc((var(--pr-entry, 0) - .2) / .8), 1)); transform: translateY(calc((1 - var(--pr-entry, 0)) * 18px)); }
+.product-world[data-splash="revealing"] :is(.pr-arrow, .pr-slider) { opacity: clamp(0, calc((var(--pr-entry, 0) - .45) / .55), 1); }
+.story-stage .scene-content[style*="--pr-outgoing-copy"] { filter: opacity(var(--pr-outgoing-copy)); }
+.pr-slot[data-hidden="true"] { visibility: hidden; will-change: auto; }
+body:has(.pr-journey-status:not([hidden])) .story-root .story-status { visibility: hidden; }
+
+/* Continue the bottom story rail above the carousel, rooms, enquiry and closing frame. */
+.pr-journey-status { position: absolute; z-index: 30; pointer-events: none; }
+.pr-journey-status[hidden] { display: none; }
+@media (max-width: 1023px) {
+  /* Phones: as on the story's bar, the caption is dropped and only the progress line remains. */
+  .pr-journey-status:not([hidden]) { display: flex; padding: 0; background: none; }
+  .pr-journey-status :is(.story-caption, .scroll-invitation, .story-total) { display: none; }
+  .pr-journey-status { bottom: var(--toolbar-gap); }
+}
+@media (max-width: 1023px) and (max-height: 740px) {
+  .product-world { --pr-frame-h: 56svh; --pr-centre: 68svh; }
+  .pr-stage { padding-top: 88px; }
+  .pr-copy h2 { font-size: clamp(28px, 7vw, 40px); }
+  .pr-counter { margin-bottom: 8px; }
+  /* Short screens clamp the description instead of making it a scroller inside the scrolling page. */
+  .pr-description { font-size: 14px; line-height: 1.4; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; }
+}
+
+/* Exit: the collection recedes while a centred aperture opens into the room. */
+.pr-splash { position: absolute; inset: 0; z-index: 8; opacity: 1; clip-path: inset(calc((1 - var(--pr-room, 0)) * 18%) calc((1 - var(--pr-room, 0)) * 50%) round calc((1 - var(--pr-room, 0)) * 36px)); visibility: hidden; pointer-events: none; }
+.product-world[data-splash-scene="entering"] :is(.pr-carousel, .pr-hero) { transform: translateY(calc(var(--pr-room, 0) * 32px)) scale(calc(1 - var(--pr-room, 0) * .12)); filter: opacity(calc(1 - var(--pr-room, 0) * .8)); }
+.product-world[data-splash-scene="entering"] :is(.pr-copy, .pr-counter, .pr-tagline) { filter: opacity(clamp(0, calc(1 - var(--pr-room, 0) * 3), 1)); }
+.product-world[data-splash-scene="entering"] :is(.pr-splash-plate, .pr-splash-film) { transform: scale(calc(1.08 - var(--pr-room, 0) * .08)); transform-origin: 50% 100%; }
+.product-world:is([data-splash-scene="entering"], [data-splash-scene="shown"]) .pr-splash { visibility: visible; }
+.pr-splash-plate, .pr-splash-film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--pr-splash-focal, 50%) 100%; }
+.pr-splash-film { opacity: 0; }
+.pr-splash-plate-end { opacity: var(--pr-splash-still, 0); }
+.pr-splash[data-film="scrubbing"] .pr-splash-film { opacity: 1; }
+.pr-splash-grade { position: absolute; inset: 0; background: linear-gradient(90deg, rgb(3 8 12 / .55), rgb(3 8 12 / .12) 38%, transparent 60%), linear-gradient(0deg, rgb(3 8 12 / .35), transparent 30%); }
+/* The covered range takes no input: the room above it is transparent to pointers. */
+.product-world:is([data-splash-scene="entering"], [data-splash-scene="shown"]) :is(.pr-carousel, .pr-arrow, .pr-slider) { pointer-events: none; }
+/* Closing copy: scene 13 of the brief, centred above the splash, arriving once the room stands. */
+.pr-splash-copy { position: absolute; left: 7vw; right: 7vw; top: 24%; z-index: 2; text-align: center; opacity: 0; translate: 0 18px; transition: opacity 700ms ease, translate 700ms var(--pr-ease); }
+.product-world[data-splash-scene="shown"] .pr-splash-copy, .pr-splash-static .pr-splash-copy { opacity: 1; translate: 0 0; }
+/* With motion the copy is the scene's sibling: above every room's picture (home-scenes.css), as the rooms' copy is. */
+.pr-stage > .pr-splash-copy { z-index: 9; visibility: hidden; pointer-events: none; }
+/* The closing copy follows page 13 of the brief, the measure the home scenes share (see home-scenes.css). */
+.pr-splash-heading { margin: 0 0 var(--space-5); font-family: var(--font-display), Georgia, serif; font-weight: 400; font-size: var(--home-title); line-height: 1.02; letter-spacing: -.03em; color: var(--ivory); }
+.pr-splash-stop { color: var(--gold); }
+.pr-splash-line { max-width: 34em; margin: 0 auto; white-space: pre-line; font-size: var(--home-body); line-height: 1.7; color: rgb(246 243 233 / .92); }
+/* Reduced motion: the finished composition stands as its own block below the range. */
+.pr-splash-static { clip-path: none; position: relative; inset: auto; height: 100svh; opacity: 1; visibility: visible; pointer-events: auto; }
+.pr-splash-static .pr-splash-grade { opacity: 1; }
+/* Keep an opaque outgoing room under the incoming dissolve: fading both exposes the carousel. */
+.product-world[data-splash-scene="shown"] .pr-splash:not(.pr-splash-static) { opacity: 1; }
+.product-world:has(.pr-splash-static) { height: auto; }
+@media (max-width: 767px) {
+  .pr-splash-copy { left: var(--page-gutter); right: var(--page-gutter); top: 128px; }
+  .pr-splash-heading { font-size: clamp(26px, 7.4vw, 42px); }
+  .pr-splash-line { white-space: normal; font-size: 15px; }
+}
+/* Landscape phones: a bigger ring under a two-line summary (bucket geometry through the --pr-* variables only),
+   and the splash copy in the left column, clear of the bucket in the middle. */
+@media (max-width: 1023px) and (max-height: 500px) and (min-aspect-ratio: 16/9) {
+  .product-world { --pr-frame-h: 64svh; --pr-centre: 66svh; }
+  .pr-stage { padding-top: 64px; }
+  .pr-counter { margin-bottom: 6px; font-size: var(--text-sm); }
+  .pr-copy h2 { margin-bottom: 8px; font-size: 26px; }
+  .pr-description { max-width: 62ch; font-size: 13px; line-height: 1.4; -webkit-line-clamp: 2; }
+  .pr-splash-copy { left: var(--page-gutter); right: auto; width: 40%; top: 76px; text-align: left; }
+  .pr-splash-heading { margin-bottom: 12px; font-size: 24px; }
+  .pr-splash-line { white-space: normal; font-size: 13px; }
+}
+
+/* The splash headline follows the story's chapter template too (see home-scenes.css): left at the gutter and centred
+   on larger screens, at the top on portrait phones (the bucket stands at the foot of the frame), in the chapter tokens. */
+.pr-splash-heading { font-size: var(--chapter-title); line-height: var(--chapter-title-lh); letter-spacing: var(--chapter-title-ls); }
+.pr-splash-line { margin: 0; font-size: var(--chapter-body); line-height: var(--chapter-body-lh); letter-spacing: var(--chapter-body-ls); color: var(--chapter-body-color); }
+@media (min-width: 1024px) {
+  .pr-splash-copy { left: var(--page-gutter); right: auto; top: 0; bottom: 0; width: 42vw; display: flex; flex-direction: column; justify-content: center; text-align: left; }
+  .pr-splash-line { max-width: 42vw; }
+  .pr-splash-grade { background: linear-gradient(90deg, rgb(2 9 13 / .46) 0%, rgb(2 9 13 / .2) 33%, transparent 68%); }
+}
+@media (max-width: 1023px) {
+  .pr-splash-copy { left: var(--page-gutter); right: var(--page-gutter); top: clamp(100px, 14svh, 150px); text-align: left; }
+  .pr-splash-line { max-width: 75%; white-space: normal; }
+  .pr-splash-grade { background: linear-gradient(180deg, rgb(3 10 15 / .86), rgb(3 10 15 / .58) 35%, rgb(3 10 15 / .07) 78%); }
+}
+@media (max-width: 1023px) and (max-height: 500px) and (min-aspect-ratio: 16/9) {
+  .pr-splash-copy { top: auto; bottom: 44px; width: 36%; }
+}
+/* Mobile (portrait and landscape phones): every section title after the hero at the desktop chapter size, clamp(26px, 3.32vw, 60px), tightly leaded. */
+@media (max-width: 767px), (max-width: 1023px) and (max-height: 500px) {
+  .pr-copy h2, .pr-splash-heading { font-size: var(--chapter-title); line-height: .977; }
+}
+
+/* The splash on its own. In the film (1872 x 1080) the bucket stands at the foot of the frame, centre, and the paint
+   bursts from its rim and fans out to both upper corners, leaving the wall directly above the bucket clear: the
+   headline stands there, on the bucket's axis, a third of the way down the frame, on every device (a portrait
+   screen shows the middle strip of the same frame, so the same point of the film). The film is anchored to the
+   bottom edge, like the rooms that follow, so the bucket and the cut into the blue room hold on wide screens.
+   These come last so they win over the chapter template and the phone layouts above. */
+.pr-splash-plate, .pr-splash-film { object-position: 50% 100%; }
+/* Cover fitting: the frame's displayed height is the stage height, or 100vw / 1.733 on a screen wider than the
+   frame, where the top of the wall is cropped; the axis then keeps clear of the header. The block sits a little right of the bucket, where the left arm of the
+   splash rises higher than the right and leaves the wall clearer. */
+.pr-splash-copy { left: var(--page-gutter); right: var(--page-gutter); top: max(30%, calc(100% - max(68%, 39.25vw))); bottom: auto; width: auto; display: flex; flex-direction: column; align-items: center; text-align: center; transform: translate(3vw, -50%); }
+.pr-splash-line { max-width: min(34em, 80vw); margin: 0 auto; }
+/* The line is a caption under the headline: the brief's own break on larger screens, and on phones (where it reflows)
+   three even lines on a narrow measure, close under the heading. */
+@media (max-width: 1023px) {
+  .pr-splash-heading { margin-bottom: var(--space-4); }
+  .pr-splash-line { max-width: min(22em, 100%); text-wrap: balance; }
+}
+.pr-splash-grade { background: linear-gradient(180deg, rgb(3 10 15 / .44), rgb(3 10 15 / .3) 45%, rgb(3 10 15 / .12)); }
+
+/* Label the product collection. */
+.pr-range-label { display: inline-block; margin-right: 14px; font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; vertical-align: middle; color: var(--gold); }
+/* The way into the featured product's page, under its description: the enquiry button's gold outline, smaller. */
+.pr-explore { display: inline-flex; align-items: center; gap: var(--space-4); min-height: var(--tap); margin-top: var(--space-4); padding: 0 var(--space-5); border: 1px solid #bb9553; border-radius: 99px; font-size: var(--text-xs); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: #efbd62; background: rgb(20 24 14 / .12); text-shadow: none; transition: background 200ms ease, border-color 200ms ease, gap 260ms var(--pr-ease); }
+.pr-explore:hover { background: rgb(223 180 99 / .16); border-color: #efbd62; gap: var(--space-5); }
+.pr-explore:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+/* Hidden under the splash room, the link must not catch a click through it. */
+.product-world:is([data-splash-scene="entering"], [data-splash-scene="shown"]) .pr-explore { pointer-events: none; }
+@media (max-width: 1023px) { .pr-explore { margin-top: var(--space-3); } }
+@media (max-width: 1023px) and (max-height: 500px) and (min-aspect-ratio: 16/9) { .pr-explore { min-height: 36px; margin-top: var(--space-2); } }

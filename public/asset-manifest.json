@@ -1,0 +1,167 @@
+[
+  {
+    "scene": 1,
+    "pdfPage": 1,
+    "source": "reference/films-hd/01-to-02.mp4",
+    "framePack": "/frames/01-to-02.bin",
+    "frame": 0,
+    "timestamp": 0.0,
+    "width": 1600,
+    "height": 902,
+    "poster": "/stills/01.webp"
+  },
+  {
+    "scene": 2,
+    "pdfPage": 2,
+    "source": "reference/films-hd/01-to-02.mp4",
+    "framePack": "/frames/01-to-02.bin",
+    "frame": 108,
+    "timestamp": 7.2,
+    "width": 1600,
+    "height": 902,
+    "poster": "/stills/02.webp"
+  },
+  {
+    "scene": 3,
+    "pdfPage": 3,
+    "source": "reference/films-hd/02-to-03.mp4",
+    "framePack": "/frames/02-to-03.bin",
+    "frame": 77,
+    "timestamp": 5.133333333333334,
+    "width": 1600,
+    "height": 902,
+    "poster": "/stills/03.webp"
+  },
+  {
+    "scene": 4,
+    "pdfPage": 4,
+    "source": "reference/films-hd/03-to-04.mp4",
+    "framePack": "/frames/03-to-04.bin",
+    "frame": 77,
+    "timestamp": 5.133333333333334,
+    "width": 1600,
+    "height": 902,
+    "poster": "/stills/04.webp"
+  },
+  {
+    "scene": 5,
+    "pdfPage": 5,
+    "source": "reference/films-hd/04-to-05.mp4",
+    "framePack": "/frames/04-to-05.bin",
+    "frame": 77,
+    "timestamp": 5.133333333333334,
+    "width": 1600,
+    "height": 902,
+    "poster": "/stills/05.webp"
+  },
+  {
+    "scene": 6,
+    "pdfPage": 7,
+    "source": "reference/films-hd/05-to-06.mp4",
+    "framePack": "/frames/05-to-06.bin",
+    "frame": 77,
+    "timestamp": 5.133333333333334,
+    "width": 1600,
+    "height": 902,
+    "poster": "/stills/06.webp"
+  },
+  {
+    "scene": 7,
+    "pdfPage": 8,
+    "source": "reference/films-hd/06-to-07.mp4",
+    "framePack": "/frames/06-to-07.bin",
+    "frame": 77,
+    "timestamp": 5.133333333333334,
+    "width": 1600,
+    "height": 902,
+    "poster": "/stills/07.webp"
+  },
+  {
+    "scene": 8,
+    "pdfPage": 9,
+    "source": "reference/films-hd/07-to-08.mp4",
+    "framePack": "/frames/07-to-08.bin",
+    "frame": 77,
+    "timestamp": 5.133333333333334,
+    "width": 1600,
+    "height": 902,
+    "poster": "/stills/08.webp"
+  },
+  {
+    "scene": 9,
+    "pdfPage": 10,
+    "source": "reference/films-hd/08-to-09.mp4",
+    "framePack": "/frames/08-to-09.bin",
+    "frame": 77,
+    "timestamp": 5.133333333333334,
+    "width": 1600,
+    "height": 902,
+    "poster": "/stills/09.webp"
+  },
+  {
+    "scene": 10,
+    "pdfPage": 11,
+    "source": "reference/films-hd/09-to-10.mp4",
+    "framePack": "/frames/09-to-10.bin",
+    "frame": 77,
+    "timestamp": 5.133333333333334,
+    "width": 1600,
+    "height": 902,
+    "poster": "/stills/10.webp"
+  },
+  {
+    "scene": 12,
+    "pdfPage": 13,
+    "source": "reference/films-hd/12-to-13.mp4",
+    "framePack": "/frames/12-to-13.bin",
+    "frame": 0,
+    "timestamp": 0.0,
+    "width": 1600,
+    "height": 902,
+    "poster": "/stills/12.webp"
+  },
+  {
+    "scene": 13,
+    "pdfPage": 14,
+    "source": "reference/films-hd/12-to-13.mp4",
+    "framePack": "/frames/12-to-13.bin",
+    "frame": 77,
+    "timestamp": 5.133333333333334,
+    "width": 1600,
+    "height": 902,
+    "poster": "/stills/13.webp"
+  },
+  {
+    "scene": 14,
+    "pdfPage": 15,
+    "source": "reference/films-hd/13-to-14.mp4",
+    "framePack": "/frames/13-to-14.bin",
+    "frame": 77,
+    "timestamp": 5.133333333333334,
+    "width": 1600,
+    "height": 902,
+    "poster": "/stills/14.webp"
+  },
+  {
+    "scene": 15,
+    "pdfPage": 16,
+    "source": "reference/films-hd/14-to-15.mp4",
+    "framePack": "/frames/14-to-15.bin",
+    "frame": 76,
+    "timestamp": 5.066666666666666,
+    "width": 1600,
+    "height": 900,
+    "poster": "/stills/15.webp"
+  },
+  {
+    "scene": 16,
+    "pdfPage": 17,
+    "source": "reference/films-hd/15-to-16.mp4",
+    "framePack": "/frames/15-to-16.bin",
+    "frame": 77,
+    "timestamp": 5.133333333333334,
+    "width": 1600,
+    "height": 900,
+    "poster": "/stills/16.webp"
+  }
+]

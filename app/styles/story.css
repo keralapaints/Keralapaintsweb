@@ -1,0 +1,71 @@
+/* The story scenes, their film stage and the progress footer (components/story). */
+.story-root { position: relative; }
+.story-stage { position: relative; }
+.story-scene { position: relative; min-height: 100svh; overflow: clip; isolation: isolate; display: flex; align-items: center; }
+.scene-visual { position: absolute; inset: 0; z-index: -1; }
+.scene-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--focal); }
+.scene-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgb(2 9 13 / .46) 0%, rgb(2 9 13 / .2) 33%, transparent 68%); }
+.scene-content { width: 100%; padding: 130px var(--page-gutter) 120px; }
+/* Opt-in contrast for detailed HD scenes: above the shared canvas, below the copy. */
+.scene-copy-shade { position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: var(--copy-shade-strength, 1); background: linear-gradient(90deg, rgb(0 0 0 / .78), rgb(0 0 0 / .64) 30%, rgb(0 0 0 / .3) 52%, transparent 80%); }
+.scene-center .scene-copy-shade { background: radial-gradient(ellipse at 50% 52%, rgb(0 0 0 / .78) 12%, rgb(0 0 0 / .5) 40%, transparent 78%); }
+.story-scene:has(.scene-copy-shade) .scene-shade { visibility: hidden; }
+.story-scene:has(.scene-copy-shade) .scene-content { position: relative; z-index: 4; text-shadow: 0 2px 12px rgb(0 0 0 / .45); }
+[data-cinematic="true"] .scene-copy-shade { opacity: 0; }
+@media (max-width: 1023px) {
+  .scene-copy-shade, .scene-center .scene-copy-shade { background: linear-gradient(0deg, rgb(0 0 0 / .72), rgb(0 0 0 / .58) 32%, rgb(0 0 0 / .2) 58%, transparent 82%); }
+}
+/* Every chapter heading shares one size; only the hero keeps its own larger scale. */
+.scene-heading { font-family: var(--font-display), Georgia, serif; font-weight: 400; font-size: var(--chapter-title); line-height: var(--chapter-title-lh); letter-spacing: var(--chapter-title-ls); margin: 0 0 var(--space-5); }
+.line-mask { display: block; overflow: clip; padding: .07em .05em .07em 0; margin-bottom: -.10em; }
+.headline-line { display: block; }
+.scene-body { font-size: var(--chapter-body); font-weight: 400; line-height: var(--chapter-body-lh); letter-spacing: var(--chapter-body-ls); max-width: 42vw; color: var(--chapter-body-color); }
+.scene-body p { margin: 0; white-space: pre-line; }
+.scene-body p + p { margin-top: 1.4em; }
+.scene-actions { display: flex; gap: var(--space-6); margin-top: clamp(40px, 7.5vh, 96px); align-items: flex-start; }
+/* Text links keep a 44px hit area through padding, not visual size. */
+.text-link { position: relative; display: inline-flex; align-items: center; min-height: var(--tap); padding: var(--space-3) 0; font-size: clamp(var(--text-xs), .83vw, 17px); font-weight: 500; letter-spacing: .02em; text-transform: uppercase; }
+.text-link::after { content: ""; position: absolute; bottom: var(--space-2); left: 0; width: 100%; height: 1px; background: rgb(246 243 233 / .58); transition: background 200ms, transform 200ms; }
+.text-link:active::after { transform: scaleX(.96); }
+.text-link:hover::after { background: var(--gold); }
+.scene-1 .scene-heading { font-size: clamp(54px, 7.0vw, 176px); line-height: .91; letter-spacing: -.035em; }
+.scene-1 .scene-content { padding-top: 160px; }
+.scene-1 .scene-body { font-size: clamp(var(--text-base), 1.33vw, 27px); }
+.scene-4 .scene-shade, .scene-5 .scene-shade, .scene-6 .scene-shade { background: linear-gradient(90deg, rgb(5 7 5 / .68), rgb(5 7 5 / .24) 37%, transparent 73%); }
+.scene-center { justify-content: center; text-align: center; }
+.scene-center .scene-content { padding-inline: 7vw; }
+.scene-center .scene-shade { background: linear-gradient(0deg, rgb(2 10 18 / .2), rgb(2 10 18 / .12)); }
+.scene-center .scene-body { max-width: 34em; margin-inline: auto; color: #f0bb61; letter-spacing: .06em; font-size: clamp(var(--text-base), 1.75vw, 36px); }
+.question-eyebrow { margin: 40px 0 var(--space-5); font-size: clamp(var(--text-xs), 1.3vw, 27px); color: #f0bb61; letter-spacing: .18em; text-transform: uppercase; }
+.scene-question { font-family: var(--font-display), Georgia, serif; font-size: var(--chapter-title); font-weight: 400; line-height: 1.08; letter-spacing: -.02em; margin: 0; }
+.scene-question span { display: block; }
+.scene-8 .scene-heading { margin-bottom: var(--space-6); }
+.scene-9 .scene-body { max-width: 42vw; }
+.scene-10 .scene-shade { background: linear-gradient(90deg, rgb(2 9 13 / .6), rgb(2 9 13 / .25) 40%, transparent 75%); }
+
+/* Progressive enhancement: without JS, the semantic scenes remain in flow. */
+[data-cinematic="true"] .story-stage { position: sticky; top: 0; height: 100vh; overflow: clip; isolation: isolate; }
+[data-cinematic="true"] .story-scene { position: absolute; inset: 0; height: 100%; min-height: 0; overflow: visible; display: flex; isolation: auto; pointer-events: none; }
+[data-cinematic="true"] .scene-visual { z-index: 0; opacity: 0; }
+[data-cinematic="true"] .scene-content { position: relative; z-index: 4; opacity: 0; }
+[data-cinematic="true"] .scene-1 .scene-visual, [data-cinematic="true"] .scene-1 .scene-content { opacity: 1; }
+/* Stills after the opening load once the curtain lifts: a lazy image without a box is not fetched, so they never compete with the hero film. */
+.is-loading [data-cinematic="true"] .story-scene:not(.scene-1, .scene-2) .scene-visual img { display: none; }
+.video-stage { display: none; pointer-events: none; }
+[data-cinematic="true"] .video-stage { display: block; position: absolute; inset: 0; z-index: 2; }
+.story-canvas, .hero-loop-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+.story-canvas { display: block; }
+.hero-loop-stage { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.story-canvas { z-index: 1; }
+.hero-handoff-shade { z-index: 3; pointer-events: none; }
+/* Warm daylight bloom from the window, shown only for the moment the hero hands off to the film. */
+.hero-light { position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0; background: radial-gradient(ellipse 58% 75% at 84% 30%, rgb(255 226 176 / .95), rgb(255 205 140 / .45) 38%, rgb(255 190 120 / 0) 72%); mix-blend-mode: screen; }
+.hero-debug { position: fixed; right: 12px; bottom: 60px; z-index: 100; margin: 0; padding: 12px; background: rgb(0 0 0 / .85); color: #fff; font: 11px/1.5 monospace; pointer-events: none; }
+.story-status { position: fixed; z-index: 15; bottom: 0; inset-inline: 0; padding: var(--space-4) var(--page-gutter) var(--space-5); display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); font-size: var(--text-xs); line-height: 1.4; letter-spacing: .12em; text-transform: uppercase; color: rgb(246 243 233 / .86); background: linear-gradient(transparent, rgb(3 10 14 / .3)); pointer-events: none; }
+.story-caption { display: flex; align-items: center; gap: var(--space-3); }
+.caption-rule { width: 26px; height: 1px; background: currentColor; opacity: .55; }
+.scroll-invitation { display: flex; gap: 16px; align-items: center; }
+.scroll-invitation > span { font-size: 19px; }
+.story-total { display: none; }
+.progress-track { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: rgb(255 255 255 / .08); }
+.progress-track > span { display: block; background: var(--gold); width: 100%; height: 100%; transform: scaleX(0); transform-origin: left; }
