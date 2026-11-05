@@ -11,6 +11,8 @@ export type ProductCategoryCopy = {
   cta: string;
   /** Alt text for the category's packshot. */
   alt: string;
+  /** Further products in this category with their own page (by id in data/products `moreProducts`). */
+  also?: readonly string[];
 };
 
 export const productsPageCopy = {
@@ -25,6 +27,8 @@ export const productsPageCopy = {
   heading: ["EXPLORE OUR PREMIUM", "PAINT PRODUCTS"],
   intro: "Discover premium paint products in Kerala from Kerala Paints, with solutions for different surfaces, spaces and application needs. Explore our range of interior and exterior emulsions, primers, waterproofing products, roof coatings, and tile and floor coatings to find a suitable option for your home or project.",
   jumpLabel: "Product categories",
+  /** Before the links to a category's further products. */
+  also: "Also:",
   guide: {
     heading: ["FIND THE RIGHT PAINT", "FOR YOUR SPACE"],
     body: [
@@ -68,6 +72,7 @@ export const productCategories: Record<string, ProductCategoryCopy> = {
     description: "A good painting system starts with the right base. Explore Kerala Paints primers, including Prime Gold, Prime Platinum and Prime Silver, for suitable surfaces before applying the recommended topcoat.",
     cta: "Explore Primers",
     alt: "Kerala Paints wall primer products",
+    also: ["prime-gold"],
   },
   "aqua-seal": {
     heading: "Waterproofing Products",
