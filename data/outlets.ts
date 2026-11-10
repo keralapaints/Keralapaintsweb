@@ -87,7 +87,7 @@ export const outlets: readonly Outlet[] = [
   { district: "Palakkad", type: "factory", place: "Kalpathy", address: "Near Kalpathy Bridge, Chathapuram, Kalpathy, Palakkad", pin: "678003", phones: ["99478 12999"] },
   { district: "Palakkad", type: "factory", place: "Vadakkencherry", address: "Darul Falah Yatheemkhana Complex, Mangalam, Vadakkencherry, Palakkad", pin: "678683", phones: [], isNew: true },
   { district: "Palakkad", type: "dealer", name: "PR Enterprises", place: "Kuthanur", address: "Chippi’s Complex and Apartments, Kalapara, opposite Co-operative Bank, Kuthanur, Palakkad", phones: ["95393 31004"] },
-  { district: "Palakkad", type: "dealer", name: "Nexus Seven", place: "Pattambi", address: "Cherpulassery Road Junction, Melepattambi, near Cool City and Chithra Auditorium, Pattambi, Palakkad", phones: ["70122 54106", "90486 71677"] },
+  { district: "Palakkad", type: "factory", name: "Nexus Seven", place: "Pattambi", address: "Cherpulassery Road Junction, Melepattambi, near Cool City and Chithra Auditorium, Pattambi, Palakkad", phones: ["70122 54106", "90486 71677"] },
   { district: "Palakkad", type: "dealer", name: "Shama Traders", place: "Alanallur", address: "Hospital Junction, Main Road, Alanallur, Palakkad", pin: "678601", phones: ["95390 05528", "81118 10670"] },
   { district: "Palakkad", type: "dealer", name: "RGK Kerala Paints", place: "Nemmara", address: "Nemmara Junction, Pollachi Road, near Boys High School, Nemmara, Palakkad", pin: "678508", phones: ["99466 58719", "88480 03105", "99460 22145"] },
   // Malappuram
@@ -101,7 +101,6 @@ export const outlets: readonly Outlet[] = [
   // Wayanad
   { district: "Wayanad", type: "factory", place: "Meenangadi", address: "Bathery Road, Kolagapara Kurishu Kavala, Wayanadiyar Residency, opposite India Post Office, Meenangadi, Wayanad", phones: ["96456 02999"] },
   { district: "Wayanad", type: "dealer", name: "Colour Nest", place: "Kalpetta", address: "Roots Tower, near Fathima Matha Hospital, Kalpetta, Wayanad", pin: "673121", phones: ["62388 22524", "62829 32524"] },
-  { district: "Wayanad", type: "dealer", name: "White House", place: "Vythiri", address: "Chundel–Meppadi Road, Vythiri, Wayanad", pin: "673576", phones: ["98958 01931", "80869 80684"] },
   { district: "Wayanad", type: "dealer", name: "VKS Traders", place: "Vellamunda", address: "Vellamunda 8/4, near Vellamunda Government Higher Secondary School, Wayanad", pin: "670731", phones: ["95620 72082", "94961 62852"] },
   // Kozhikode
   { district: "Kozhikode", type: "factory", place: "Chemancheri", address: "NH 66, Chemancheri, Pookad, opposite old Sub Registrar Office, Kozhikode", pin: "673304", phones: ["99460 28999"] },
