@@ -126,5 +126,6 @@ export const outlets: readonly Outlet[] = [
   { district: "Kasaragod", type: "dealer", name: "ABM Paints & Hardware", place: "Ajanur", address: "Opposite KHM School, Manikoth, Madiyan, Kanhangad, Kasaragod", pin: "671316", phones: ["90488 22313", "95260 00786"] },
   { district: "Kasaragod", type: "dealer", name: "RN Traders", place: "Mogral Puthur", address: "Near Eriyal Juma Masjid, Eriyal, Kasaragod", phones: ["98959 17704", "98951 42514"], isNew: true },
   // Tamil Nadu
-  { district: "Coimbatore (Tamil Nadu)", type: "factory", place: "Coimbatore", address: "Malumichampatti Village, Chettipalayam Road, Eachanari Pirivu, Coimbatore, Tamil Nadu", pin: "641050", phones: ["90613 65999"] },
+   { district: "Coimbatore (Tamil Nadu)", type: "factory", place: "Coimbatore", address: "Malumichampatti Village, Chettipalayam Road, Eachanari Pirivu, Coimbatore, Tamil Nadu", pin: "641050", phones: ["90613 65999"] },
+  { district: "Coimbatore (Tamil Nadu)", type: "dealer", name: "Rathi Paints", place: "Sencherimalai", address: "Kumarapalayam, near Sencherimalai Murugan Kovil, Sulur, Coimbatore, Tamil Nadu", pin: "641669", phones: ["62829 86262", "88914 78056"], isNew: true },
 ];
