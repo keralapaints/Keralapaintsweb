@@ -1,9 +1,9 @@
-import { outlets, outletsCopy, type Outlet } from "@/data/outlets";
+import { outletsCopy, type Outlet } from "@/data/outlets";
 import { site } from "@/data/site";
 import { absoluteUrl } from "@/lib/product/product-schema";
 
 /** The Find an Outlet page's address. */
-export const OUTLETS_PATH = "/outlets/";
+export const OUTLETS_PATH = "/outlets";
 
 /** An outlet's display name: the dealer's name, or "Kerala Paints Factory Outlet". */
 export const outletName = (outlet: Outlet) => outlet.name ?? outletsCopy.factoryName;
@@ -24,16 +24,16 @@ export const directionsHref = (outlet: Outlet) => {
 export const outletId = (outlet: Outlet) =>
   `${outlet.district}-${outlet.place}-${outlet.name ?? "factory"}`.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
-/** The districts, in list order, each once. */
-export const outletDistricts = [...new Set(outlets.map((outlet) => outlet.district))];
+/** The districts of a list of outlets, in list order, each once. */
+export const districtsOf = (list: readonly Outlet[]) => [...new Set(list.map((outlet) => outlet.district))];
 
 /**
  * The structured data for the page: its breadcrumb, and the factory outlets as Kerala Paints stores. Dealers are
  * independent businesses, so they are listed on the page but not described as Kerala Paints stores.
  */
-export function outletsSchema() {
+export function outletsSchema(list: readonly Outlet[]) {
   const url = absoluteUrl(OUTLETS_PATH);
-  const factories = outlets.filter((outlet) => outlet.type === "factory");
+  const factories = list.filter((outlet) => outlet.type === "factory");
   return [{
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -51,7 +51,7 @@ export function outletsSchema() {
           "@type": "PostalAddress",
           streetAddress: outlet.address,
           addressLocality: outlet.place,
-          addressRegion: outlet.district === "Coimbatore (Tamil Nadu)" ? "Tamil Nadu" : "Kerala",
+          addressRegion: /tamil nadu/i.test(outlet.district) ? "Tamil Nadu" : "Kerala",
           postalCode: outlet.pin,
           addressCountry: "IN",
         },

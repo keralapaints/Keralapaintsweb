@@ -1,8 +1,8 @@
 "use client";
 
 import { useId, useMemo, useState } from "react";
-import { outlets, outletsCopy, type Outlet, type OutletType } from "@/data/outlets";
-import { directionsHref, outletDistricts, outletId, outletName, telHref } from "@/lib/outlets/outlets";
+import { outletsCopy, type Outlet, type OutletType } from "@/data/outlets";
+import { directionsHref, districtsOf, outletId, outletName, telHref } from "@/lib/outlets/outlets";
 
 type TypeFilter = "all" | OutletType;
 
@@ -17,12 +17,13 @@ const searchText = (outlet: Outlet) =>
  * The outlet list with its search, district and type filters. Every outlet is in the first render, so the whole list
  * is in the page's HTML; the filters only narrow it in the browser.
  */
-export function OutletFinder() {
+export function OutletFinder({ outlets }: { outlets: readonly Outlet[] }) {
   const copy = outletsCopy;
   const searchId = useId();
   const [query, setQuery] = useState("");
   const [district, setDistrict] = useState("");
   const [type, setType] = useState<TypeFilter>("all");
+  const districts = useMemo(() => districtsOf(outlets), [outlets]);
 
   const groups = useMemo(() => {
     const words = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
@@ -30,8 +31,8 @@ export function OutletFinder() {
       (!district || outlet.district === district)
       && (type === "all" || outlet.type === type)
       && words.every((word) => searchText(outlet).includes(word)));
-    return outletDistricts.map((name) => ({ name, items: matches.filter((outlet) => outlet.district === name) })).filter((group) => group.items.length > 0);
-  }, [query, district, type]);
+    return districts.map((name) => ({ name, items: matches.filter((outlet) => outlet.district === name) })).filter((group) => group.items.length > 0);
+  }, [outlets, districts, query, district, type]);
   const count = groups.reduce((total, group) => total + group.items.length, 0);
   const filtered = query !== "" || district !== "" || type !== "all";
   const clear = () => { setQuery(""); setDistrict(""); setType("all"); };
@@ -46,7 +47,7 @@ export function OutletFinder() {
         <label htmlFor={`${searchId}-district`}>{copy.districtLabel}</label>
         <select id={`${searchId}-district`} value={district} onChange={(event) => setDistrict(event.target.value)}>
           <option value="">{copy.allDistricts}</option>
-          {outletDistricts.map((name) => <option key={name} value={name}>{name}</option>)}
+          {districts.map((name) => <option key={name} value={name}>{name}</option>)}
         </select>
       </div>
       <fieldset className="ol-types">

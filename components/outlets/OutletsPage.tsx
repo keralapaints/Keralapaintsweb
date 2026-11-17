@@ -1,4 +1,4 @@
-import { outletsCopy } from "@/data/outlets";
+import { outletsCopy, type Outlet } from "@/data/outlets";
 import { productPageCopy } from "@/data/product-details";
 import { productPages } from "@/lib/product/product-data";
 import { SiteFooter } from "@/components/site/SiteFooter";
@@ -10,7 +10,7 @@ import "./outlets.css";
 const HERO_STILL = "/stills/16.webp";
 
 /** Find an Outlet (/outlets/): the heading, the searchable outlet list, the consultation and the footer. */
-export function OutletsPage() {
+export function OutletsPage({ outlets }: { outlets: readonly Outlet[] }) {
   const copy = outletsCopy;
   return <>
     <div className="pp-top-shade" aria-hidden="true" />
@@ -33,7 +33,7 @@ export function OutletsPage() {
       </section>
 
       <section className="pp-section ol-list" aria-label={copy.breadcrumb}>
-        <OutletFinder />
+        <OutletFinder outlets={outlets} />
       </section>
 
       <section className="pp-cta" aria-labelledby="ol-cta-heading">

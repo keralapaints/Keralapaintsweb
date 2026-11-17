@@ -2,7 +2,7 @@
 /** Site-wide words: page metadata, the consultation call to action, the menu, the loader and the closing footer. */
 export const site = {
   /** The live address, used for canonical links, the sitemap and structured data. Change it if the domain differs. */
-  url: "https://www.keralapaints.com",
+  url: "https://keralapaints.com",
   name: "Kerala Paints",
   title: "Kerala Paints | Beyond Beautiful Walls",
   logoAlt: "Kerala Paints — Colours of Care",

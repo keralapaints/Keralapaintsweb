@@ -38,3 +38,21 @@
 .menu-trigger:hover { background: rgb(246 243 233 / .06); }
 .menu-trigger span { width: 22px; height: 2px; border-radius: 4px; background: var(--ivory); transition: width 200ms ease; }
 .menu-trigger:hover span:nth-child(2) { width: 15px; }
+
+/* The Products panel: one row per category (its page), and beside the hovered or focused row a second panel with
+   that category's products. A solid panel, because a blur cannot sit inside the blurred panel. */
+.nav-panel--products { min-width: 268px; }
+.nav-cat { position: relative; }
+.nav-panel .nav-cat-link { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; }
+.nav-cat-arrow { font-size: 18px; line-height: 1; color: var(--gold); opacity: .55; transition: opacity 180ms ease, translate 220ms cubic-bezier(.22, 1, .36, 1); }
+.nav-cat:is(:hover, :focus-within) > .nav-cat-link { color: #fff; background: rgb(255 255 255 / .15); box-shadow: inset 0 1px 0 rgb(255 255 255 / .2); }
+.nav-cat:is(:hover, :focus-within) .nav-cat-arrow { opacity: 1; translate: 3px 0; }
+.nav-flyout { position: absolute; top: -8px; left: calc(100% + 14px); z-index: 1; display: grid; min-width: 250px; padding: 8px; border-radius: 22px; border: 1px solid rgb(255 255 255 / .24); background: rgb(9 20 24 / .96); box-shadow: 0 24px 48px -20px rgb(0 0 0 / .7), inset 0 1px 0 rgb(255 255 255 / .2); opacity: 0; visibility: hidden; translate: -6px 0; transition: opacity 160ms ease, translate 200ms cubic-bezier(.22, 1, .36, 1), visibility 0s linear 160ms; }
+/* An invisible bridge across the gap, so the pointer can travel from the row to its products. */
+.nav-flyout::before { content: ""; position: absolute; top: 0; bottom: 0; left: -16px; width: 16px; }
+.nav-cat:is(:hover, :focus-within) > .nav-flyout { opacity: 1; visibility: visible; translate: 0 0; transition-delay: 0s; }
+.nav-flyout-label { margin: 0; padding: 8px 14px 6px; font-size: 10px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.nav-panel .nav-flyout-all { margin-top: 4px; border-top: 1px solid rgb(255 255 255 / .1); border-radius: 0 0 14px 14px; font-size: var(--text-xs); letter-spacing: .06em; color: var(--gold); }
+.nav-panel .nav-panel-all { margin-top: 4px; border-top: 1px solid rgb(255 255 255 / .12); border-radius: 0 0 16px 16px; color: var(--gold); }
+@media (prefers-reduced-motion: reduce) { .nav-flyout, .nav-cat-arrow { transition: none; translate: none; } }
+:root[data-motion-choice="reduced"] :is(.nav-flyout, .nav-cat-arrow) { transition: none; translate: none; }

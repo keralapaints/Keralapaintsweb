@@ -1,0 +1,355 @@
+/* The product page template (components/products/ProductTemplatePage) and category pages: the story's ink, ivory and
+   gold, laid out for reading and comparing. Prefix: pt-. */
+.pt-page { --pt-line: rgb(246 243 233 / .12); --pt-gold-2: #efbd62; --pt-card: linear-gradient(160deg, rgb(255 255 255 / .05), rgb(255 255 255 / .01) 60%); --pt-measure: 46rem; --pt-ease: cubic-bezier(.22, 1, .36, 1);
+  /* Every block starts at the same left edge as the header logo and the hero copy; only very wide screens centre it. */
+  --pt-max: 1720px; --pt-edge: max(var(--page-gutter), calc((100% - var(--pt-max)) / 2));
+  position: relative; overflow-x: clip; background: var(--ink); color: var(--ivory); font-variant-numeric: lining-nums; }
+.pt-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.pt-page a { color: inherit; }
+/* :where() keeps this reset weaker than every pt- rule below, so their margins win. */
+.pt-page :where(p, ul, ol, dl, h2, h3) { margin: 0; }
+
+/* Shared type. */
+.pt-h2 { margin-bottom: var(--space-6); font-family: var(--font-display), Georgia, serif; font-size: clamp(30px, 3vw, 50px); font-weight: 400; line-height: 1.08; letter-spacing: -.01em; text-wrap: balance; }
+.pt-h3 { font-family: var(--font-display), Georgia, serif; font-size: clamp(22px, 1.7vw, 28px); font-weight: 400; line-height: 1.2; }
+.pt-lead { max-width: var(--pt-measure); margin-bottom: var(--space-6); font-size: clamp(var(--text-base), 1.15vw, 20px); line-height: 1.65; color: rgb(246 243 233 / .88); }
+.pt-lead em { font-style: normal; }
+.pt-body { max-width: var(--pt-measure); font-size: var(--text-base); line-height: 1.7; color: var(--text-secondary); }
+.pt-label { margin-bottom: var(--space-3); font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.pt-footnote { max-width: var(--pt-measure); margin-top: var(--space-4); font-size: var(--text-sm); line-height: 1.55; color: rgb(246 243 233 / .55); }
+.pt-note { max-width: var(--pt-measure); font-size: var(--text-base); line-height: 1.65; color: rgb(246 243 233 / .85); }
+.pt-page :is(.pt-lead, .pt-body, .pt-note, .pt-step-notes, .pt-features) a { color: var(--pt-gold-2); text-decoration: underline; text-decoration-color: rgb(239 189 98 / .45); text-underline-offset: 3px; }
+.pt-icon { flex: none; color: var(--gold); }
+
+/* Buttons and text links. */
+.pt-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); margin-top: var(--space-6); }
+.pt-button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 26px; border: 1px solid rgb(246 243 233 / .35); border-radius: 99px; font: inherit; font-size: var(--text-sm); letter-spacing: .06em; text-decoration: none; color: var(--ivory); background: rgb(7 16 20 / .35); cursor: pointer; transition: background 200ms ease, border-color 200ms ease; }
+.pt-button:hover { border-color: var(--ivory); background: rgb(255 255 255 / .06); }
+.pt-button--primary { border-color: transparent; color: #241a07; font-weight: 500; background: linear-gradient(135deg, #f3d77c, #ddb04f 55%, #c99a3a); }
+.pt-button--primary:hover { border-color: transparent; background: linear-gradient(135deg, #f7e19a, #e3b95c 55%, #cfa245); }
+.pt-button:disabled { opacity: .6; cursor: progress; }
+.pt-text-link { display: inline-flex; align-items: center; min-height: var(--tap); font-size: var(--text-sm); letter-spacing: .06em; color: var(--pt-gold-2); text-decoration: underline; text-decoration-color: rgb(239 189 98 / .4); text-underline-offset: 4px; }
+.pt-text-link:hover { text-decoration-color: currentColor; }
+.pt-page :focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+
+/* 1. Hero: the nature backdrop behind the copy, the pack beside it. */
+.pt-hero { position: relative; isolation: isolate; display: flex; align-items: center; min-height: 100svh; overflow: hidden; }
+.pt-hero-backdrop { position: absolute; inset: 0; z-index: -1; }
+.pt-hero-backdrop :is(img, video) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pt-hero-backdrop::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(3 8 12 / .92), rgb(3 8 12 / .72) 42%, rgb(3 8 12 / .25) 75%), linear-gradient(0deg, var(--ink), rgb(7 16 20 / 0) 35%); }
+.pt-hero-inner { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); align-items: center; gap: clamp(24px, 4vw, 72px); width: 100%; padding: calc(var(--header-height, 84px) + 5svh) var(--pt-edge) 7svh; }
+.pt-crumbs ol { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 var(--space-6); padding: 0; list-style: none; font-size: var(--text-xs); letter-spacing: .12em; text-transform: uppercase; color: rgb(246 243 233 / .62); }
+.pt-crumbs li + li::before { content: "/"; margin-right: 8px; color: var(--gold); }
+.pt-crumbs a { text-decoration: none; }
+.pt-crumbs a:hover, .pt-crumbs [aria-current] { color: var(--ivory); }
+.pt-title { display: grid; gap: var(--space-3); margin: 0; font-family: var(--font-display), Georgia, serif; font-weight: 400; }
+.pt-title-name { font-size: clamp(46px, 5.6vw, 96px); line-height: .95; letter-spacing: -.01em; text-transform: uppercase; }
+.pt-title-tagline { max-width: 20em; font-style: italic; font-size: clamp(22px, 2vw, 34px); line-height: 1.2; color: rgb(246 243 233 / .88); text-wrap: balance; }
+.pt-subhead { margin-top: var(--space-5); font-size: var(--text-xs); font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.pt-intro { max-width: 40em; margin-top: var(--space-4); font-size: clamp(var(--text-base), 1.05vw, 18px); line-height: 1.65; color: rgb(246 243 233 / .86); }
+/* Trust badges: one even band of four, split by hairlines, each with a gold tick. Equal cells keep the row tidy
+   whatever the wording; a badge that runs long wraps inside its own cell. */
+.pt-badges { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 46rem; margin-top: var(--space-6); padding: 0; list-style: none; border-block: 1px solid rgb(215 165 83 / .3); }
+.pt-badges li { display: flex; align-items: center; gap: 10px; padding: 14px 16px; font-size: 13px; font-weight: 500; line-height: 1.3; letter-spacing: .02em; color: var(--ivory); }
+.pt-badges li:first-child { padding-left: 0; }
+.pt-badges li + li { border-left: 1px solid rgb(246 243 233 / .12); }
+.pt-badge-mark { position: relative; flex: none; width: 22px; height: 22px; border: 1px solid rgb(215 165 83 / .6); border-radius: 50%; background: rgb(215 165 83 / .12); }
+.pt-badge-mark::after { content: ""; position: absolute; left: 50%; top: 45%; width: 8px; height: 4px; border-left: 1.5px solid var(--pt-gold-2); border-bottom: 1.5px solid var(--pt-gold-2); translate: -50% -50%; rotate: -45deg; }
+.pt-glance { display: grid; grid-template-columns: repeat(3, auto) minmax(0, 1fr); gap: var(--space-3) var(--space-6); max-width: 46rem; margin-top: var(--space-5); }
+.pt-glance div { display: grid; gap: 2px; }
+.pt-glance dt { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: rgb(246 243 233 / .55); }
+.pt-glance dd { margin: 0; font-size: var(--text-sm); line-height: 1.45; color: var(--ivory); }
+.pt-pack { position: relative; justify-self: center; width: min(100%, 520px); aspect-ratio: 4 / 5; }
+.pt-pack::before { content: ""; position: absolute; left: 50%; top: 50%; width: 80%; height: 60%; translate: -50% -50%; border-radius: 50%; background: radial-gradient(ellipse, rgb(255 232 196 / .28), transparent 70%); filter: blur(24px); }
+.pt-pack img { position: relative; width: 100%; height: 100%; object-fit: contain; scale: calc(1.12 * var(--pt-pack-scale, 1)); translate: 0 var(--pt-pack-y, 0%); filter: drop-shadow(0 30px 34px rgb(0 4 8 / .6)); }
+
+/* Sections: one shared measure, a hairline between them. */
+.pt-section { width: 100%; padding: clamp(64px, 10svh, 120px) var(--pt-edge); border-top: 1px solid var(--pt-line); scroll-margin-top: var(--header-height, 84px); }
+.pt-hero + .pt-section { border-top: 0; }
+.pt-sub { margin-top: clamp(40px, 6svh, 64px); }
+.pt-sub > .pt-h3 { margin-bottom: var(--space-4); }
+
+/* 2. Key features: a grid of cards. Each card shares its row's three tracks (icon, feature, benefit), so the
+   features and benefits line up across a row even when one feature wraps onto two lines. */
+.pt-features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.4vw, 20px); padding: 0; list-style: none; }
+.pt-features li { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: var(--space-3); padding: var(--space-6); border: 1px solid var(--pt-line); border-radius: 20px; font-size: var(--text-base); line-height: 1.6; color: var(--text-secondary); background: var(--pt-card); transition: border-color 300ms ease, translate 400ms var(--pt-ease); }
+.pt-features li:hover { border-color: rgb(215 165 83 / .45); translate: 0 -2px; }
+/* The paragraph keeps "feature – benefit" together for readers; its two parts take the card's tracks. */
+.pt-features p { display: contents; }
+.pt-feature-icon { display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: var(--space-2); border: 1px solid rgb(215 165 83 / .4); border-radius: 14px; background: radial-gradient(circle at 30% 25%, rgb(239 189 98 / .22), rgb(215 165 83 / .04) 70%); }
+.pt-features strong { align-self: end; font-family: var(--font-display), Georgia, serif; font-size: clamp(20px, 1.4vw, 24px); font-weight: 500; line-height: 1.25; color: var(--ivory); }
+/* A card left alone on the last row spans it, icon beside the words, with the gold edge of a highlight. */
+.pt-features li:last-child:nth-child(3n + 1) { grid-column: 1 / -1; grid-row: auto; grid-template-rows: auto auto; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--space-5); row-gap: 4px; align-items: center; border-color: rgb(215 165 83 / .45); background: linear-gradient(160deg, rgb(215 165 83 / .1), rgb(255 255 255 / .01) 60%); }
+.pt-features li:last-child:nth-child(3n + 1) .pt-feature-icon { grid-row: 1 / span 2; margin-bottom: 0; }
+.pt-usage { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); margin-top: var(--space-6); }
+.pt-checklist { display: grid; gap: var(--space-2); padding: 0; list-style: none; }
+.pt-checklist li { position: relative; padding-left: 28px; font-size: var(--text-base); line-height: 1.5; color: rgb(246 243 233 / .88); }
+.pt-checklist li::before { content: ""; position: absolute; left: 2px; top: .35em; width: 12px; height: 7px; border-left: 1.5px solid var(--gold); border-bottom: 1.5px solid var(--gold); rotate: -45deg; }
+
+/* 3. Specifications: a real table. */
+.pt-table-wrap { overflow-x: auto; border: 1px solid var(--pt-line); border-radius: 20px; }
+.pt-spec-table { width: 100%; border-collapse: collapse; font-size: var(--text-base); }
+.pt-spec-table caption { padding: 18px 24px; border-bottom: 1px solid var(--pt-line); font-size: 11px; font-weight: 500; letter-spacing: .16em; text-align: left; text-transform: uppercase; color: var(--gold); background: rgb(255 255 255 / .03); }
+.pt-spec-table th, .pt-spec-table td { padding: 15px 24px; border-bottom: 1px solid var(--pt-line); text-align: left; vertical-align: top; line-height: 1.5; }
+.pt-spec-table tr:last-child > * { border-bottom: 0; }
+.pt-spec-table th { width: 34%; font-weight: 400; font-size: var(--text-sm); letter-spacing: .04em; color: rgb(246 243 233 / .62); }
+.pt-spec-table tbody tr:hover > * { background: rgb(255 255 255 / .02); }
+.pt-callout { max-width: var(--pt-measure); padding: var(--space-6); border: 1px solid rgb(215 165 83 / .35); border-left: 2px solid var(--gold); border-radius: 16px; background: rgb(215 165 83 / .06); }
+.pt-callout .pt-text-link { margin-top: var(--space-3); }
+
+/* 4. How to apply: the heading with its lead underneath, then the steps as one connected process: a row of cards on a
+   gold line on wide screens, a vertical timeline below. The step that applies this product is gold; an optional step
+   has a dashed edge. Then the repainting and care cards. */
+.pt-apply-head { display: grid; gap: var(--space-4); max-width: 60rem; margin-bottom: clamp(40px, 6svh, 64px); }
+.pt-apply-head .pt-h2, .pt-apply-head .pt-lead { margin-bottom: 0; }
+.pt-process { --pt-dot: 48px; position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 clamp(12px, 1.2vw, 20px); padding: 0; list-style: none; }
+/* The line joining the step numbers: a faint track, and a gold line over it that fills where scroll animation runs. */
+.pt-process::before, .pt-process::after { content: ""; position: absolute; top: calc(var(--pt-dot) / 2); left: 10%; right: 10%; height: 1px; background: var(--pt-line); }
+.pt-process::after { background: linear-gradient(90deg, var(--gold), var(--pt-gold-2)); transform-origin: left; scale: 0 1; }
+/* Every step shares the row's five tracks (number, tag, title, text, notes), so the titles start level across the row
+   and every description starts on the same line, however many lines a title takes. */
+.pt-process-step { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 0; }
+.pt-process-marker { position: relative; z-index: 1; justify-self: center; display: grid; place-items: center; width: var(--pt-dot); height: var(--pt-dot); border: 1px solid rgb(215 165 83 / .6); border-radius: 50%; font-size: 13px; font-weight: 500; letter-spacing: .06em; color: var(--pt-gold-2); background: var(--ink); transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease; margin-bottom: 20px; }
+.pt-process-card { display: grid; grid-row: 2 / span 4; grid-template-rows: subgrid; row-gap: 0; align-content: start; height: 100%; padding: var(--space-5); border: 1px solid var(--pt-line); border-radius: 20px; background: var(--pt-card); transition: border-color 300ms ease, translate 400ms var(--pt-ease); }
+.pt-process-card .pt-body { grid-row: 3; align-self: start; font-size: var(--text-sm); line-height: 1.65; }
+.pt-process-step:hover .pt-process-card { border-color: rgb(215 165 83 / .45); translate: 0 -3px; }
+.pt-process-step:hover .pt-process-marker { border-color: transparent; color: #241a07; background: var(--pt-gold-2); }
+.pt-process-step[data-tone="product"] .pt-process-card { border-color: rgb(215 165 83 / .55); background: linear-gradient(160deg, rgb(215 165 83 / .14), rgb(255 255 255 / .015) 60%); }
+.pt-process-step[data-tone="product"] .pt-process-marker { border-color: transparent; color: #241a07; background: var(--pt-gold-2); box-shadow: 0 0 0 6px rgb(215 165 83 / .15); }
+.pt-process-step[data-tone="optional"] .pt-process-card { border-style: dashed; border-color: rgb(246 243 233 / .22); }
+.pt-process-step[data-tone="optional"] .pt-process-marker { border-style: dashed; }
+.pt-process-tag { grid-row: 1; justify-self: start; align-self: start; margin-bottom: var(--space-3); padding: 3px 10px; border-radius: 99px; font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #241a07; background: var(--pt-gold-2); }
+.pt-process-step[data-tone="optional"] .pt-process-tag { border: 1px dashed rgb(215 165 83 / .6); color: var(--gold); background: none; }
+.pt-step-title { grid-row: 2; align-self: start; display: grid; gap: 6px; margin-bottom: var(--space-3); font-family: var(--font-display), Georgia, serif; font-size: clamp(20px, 1.4vw, 24px); font-weight: 500; line-height: 1.25; }
+.pt-step-number { font-family: var(--font-body), system-ui, sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+/* Special cases inside a step: small gold panels with a mark. */
+.pt-step-notes { grid-row: 4; align-self: start; display: grid; gap: 8px; margin-top: var(--space-4); padding: 0; list-style: none; }
+.pt-step-notes li { position: relative; padding: 10px 12px 10px 38px; border: 1px solid rgb(215 165 83 / .22); border-radius: 12px; font-size: var(--text-sm); line-height: 1.5; color: var(--text-secondary); background: rgb(215 165 83 / .06); }
+.pt-step-notes li::before { content: "!"; position: absolute; left: 12px; top: 11px; display: grid; place-items: center; width: 16px; height: 16px; border: 1px solid rgb(215 165 83 / .7); border-radius: 50%; font-size: 10px; font-weight: 600; line-height: 1; color: var(--pt-gold-2); }
+.pt-step-notes strong { font-weight: 500; color: var(--ivory); }
+/* Painting systems, for products that list them: numbered routes ending on the topcoat. */
+.pt-systems { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: var(--space-5); }
+.pt-system { display: flex; flex-direction: column; padding: var(--space-6); border: 1px solid var(--pt-line); border-radius: 20px; background: var(--pt-card); }
+.pt-system-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-5); padding-bottom: var(--space-4); border-bottom: 1px solid var(--pt-line); }
+.pt-system-title { font-family: var(--font-display), Georgia, serif; font-size: clamp(22px, 1.6vw, 26px); font-weight: 500; line-height: 1.2; }
+.pt-system-count { padding: 4px 12px; border: 1px solid rgb(215 165 83 / .4); border-radius: 99px; font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; color: var(--gold); }
+.pt-system ol { display: grid; gap: 0; margin-bottom: var(--space-5); padding: 0; list-style: none; counter-reset: pt-system; }
+.pt-system li { position: relative; counter-increment: pt-system; min-height: 30px; padding: 3px 0 var(--space-4) 46px; font-size: var(--text-base); line-height: 1.45; color: rgb(246 243 233 / .9); }
+.pt-system li::before { content: counter(pt-system); position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid var(--gold); border-radius: 50%; font-size: var(--text-sm); color: var(--pt-gold-2); background: var(--ink); }
+.pt-system li:not(:last-child)::after { content: ""; position: absolute; left: 15px; top: 30px; bottom: 0; width: 1px; background: rgb(215 165 83 / .35); }
+.pt-system li:last-child { padding-bottom: 0; font-weight: 500; color: var(--ivory); }
+.pt-system li:last-child::before { border-color: transparent; color: #241a07; background: var(--pt-gold-2); }
+.pt-system-note { margin-top: auto; padding-top: var(--space-4); border-top: 1px solid var(--pt-line); font-size: var(--text-sm); line-height: 1.55; color: rgb(246 243 233 / .65); }
+/* Repainting and care: two cards side by side under the steps. */
+.pt-apply-extras { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: var(--space-5); margin-top: clamp(32px, 5svh, 56px); }
+.pt-extra { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-5); align-items: start; padding: var(--space-6); border: 1px solid var(--pt-line); border-radius: 20px; background: var(--pt-card); }
+.pt-extra .pt-h3 { margin-bottom: var(--space-2); }
+.pt-extra .pt-feature-icon { margin-bottom: 0; }
+.pt-extra--care { border-color: rgb(215 165 83 / .35); background: linear-gradient(160deg, rgb(215 165 83 / .08), rgb(255 255 255 / .01) 60%); }
+/* Where scroll-linked animation runs, the gold line fills and the step cards rise in as they come into view. */
+@supports (animation-timeline: view()) {
+  .pt-process::after { animation: pt-line-fill linear both; animation-timeline: view(); animation-range: entry 40% cover 55%; }
+  .pt-process-step, .pt-extra { animation: pt-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+  @keyframes pt-line-fill { to { scale: 1 1; } }
+}
+@supports not (animation-timeline: view()) {
+  .pt-process::after { scale: 1 1; }
+}
+
+/* 5. Price: the card beside its notes. */
+.pt-price { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); align-items: start; }
+.pt-price-card { padding: var(--space-6); border: 1px solid rgb(215 165 83 / .45); border-radius: 24px; background: linear-gradient(160deg, rgb(215 165 83 / .1), rgb(255 255 255 / .01) 60%); }
+.pt-price-label { margin-bottom: var(--space-5); font-family: var(--font-display), Georgia, serif; font-size: clamp(24px, 2vw, 30px); }
+.pt-price-card dl > div { display: flex; justify-content: space-between; gap: var(--space-4); padding: 12px 0; border-bottom: 1px solid var(--pt-line); }
+.pt-price-card dt { font-size: var(--text-sm); color: rgb(246 243 233 / .65); }
+.pt-price-card dd { margin: 0; text-align: right; font-size: var(--text-base); }
+.pt-price-card s { color: rgb(246 243 233 / .55); }
+.pt-price-offer dd { font-family: var(--font-display), Georgia, serif; font-size: 34px; line-height: 1; color: var(--pt-gold-2); font-variant-numeric: lining-nums tabular-nums; }
+.pt-price-offer { align-items: center; }
+.pt-price-calc { margin-top: var(--space-4); font-size: var(--text-sm); line-height: 1.55; color: rgb(246 243 233 / .62); }
+.pt-price-notes { display: grid; gap: var(--space-4); justify-items: start; }
+.pt-price-notes .pt-button { margin-top: var(--space-3); }
+
+/* 6. Questions: the heading and a way to ask more on the left (it stays in view on wide screens), the questions as
+   cards on the right. Every answer is in the HTML; a card glows gold while it is open. */
+.pt-faq-layout { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.5fr); gap: clamp(32px, 5vw, 96px); align-items: start; }
+.pt-faq-intro { position: sticky; top: calc(var(--header-height, 84px) + 32px); display: grid; gap: var(--space-4); }
+.pt-faq-intro .pt-h2 { margin-bottom: 0; }
+.pt-faq-more { margin-top: var(--space-5); padding-top: var(--space-5); border-top: 1px solid var(--pt-line); }
+.pt-faq-more .pt-label { margin-bottom: 0; }
+.pt-faq-more .pt-actions { margin-top: var(--space-4); }
+.pt-faq { --pt-faq-pad: clamp(18px, 1.8vw, 28px); --pt-faq-num: 28px; --pt-faq-gap: 18px; display: grid; gap: 12px; interpolate-size: allow-keywords; }
+.pt-faq details { border: 1px solid var(--pt-line); border-radius: 18px; background: var(--pt-card); transition: border-color 300ms ease, background-color 300ms ease, box-shadow 300ms ease; }
+.pt-faq details:hover { border-color: rgb(215 165 83 / .35); }
+.pt-faq details[open] { border-color: rgb(215 165 83 / .5); background: linear-gradient(160deg, rgb(215 165 83 / .1), rgb(255 255 255 / .015) 55%); box-shadow: 0 18px 40px -24px rgb(0 0 0 / .8); }
+.pt-faq summary { display: grid; grid-template-columns: var(--pt-faq-num) minmax(0, 1fr) auto; align-items: center; gap: var(--pt-faq-gap); padding: 20px var(--pt-faq-pad); cursor: pointer; list-style: none; border-radius: 18px; }
+.pt-faq summary::-webkit-details-marker { display: none; }
+.pt-faq-num { font-size: 13px; font-weight: 500; letter-spacing: .12em; color: var(--gold); font-variant-numeric: tabular-nums lining-nums; }
+.pt-faq-q { font-family: var(--font-display), Georgia, serif; font-size: clamp(20px, 1.5vw, 25px); font-weight: 500; line-height: 1.3; transition: color 250ms ease; }
+.pt-faq summary:hover .pt-faq-q, .pt-faq details[open] .pt-faq-q { color: var(--pt-gold-2); }
+/* The plus sits in a gold ring; open, the ring fills and the plus turns to a minus. */
+.pt-faq-mark { position: relative; flex: none; width: 36px; height: 36px; border: 1px solid rgb(215 165 83 / .55); border-radius: 50%; transition: background-color 300ms ease, border-color 300ms ease, scale 300ms var(--pt-ease); }
+.pt-faq-mark::before, .pt-faq-mark::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; translate: -50% -50%; border-radius: 1px; background: var(--pt-gold-2); transition: rotate 350ms var(--pt-ease), background-color 300ms ease; }
+.pt-faq-mark::after { rotate: 90deg; }
+.pt-faq summary:hover .pt-faq-mark { scale: 1.08; }
+.pt-faq details[open] .pt-faq-mark { border-color: transparent; background: var(--pt-gold-2); }
+.pt-faq details[open] .pt-faq-mark::before, .pt-faq details[open] .pt-faq-mark::after { background: #241a07; }
+.pt-faq details[open] .pt-faq-mark::after { rotate: 0deg; }
+/* The answer lines up under the question, not under the number. */
+.pt-faq-answer { padding: 0 var(--pt-faq-pad) 24px calc(var(--pt-faq-pad) + var(--pt-faq-num) + var(--pt-faq-gap)); }
+.pt-faq-answer .pt-body { max-width: 44rem; }
+.pt-faq details[open] .pt-faq-answer { animation: pt-faq-in 450ms var(--pt-ease) both; }
+@keyframes pt-faq-in { from { opacity: 0; translate: 0 -6px; } }
+/* Where the browser can animate to an automatic height, the answer slides open and shut. */
+.pt-faq details::details-content { height: 0; overflow: clip; transition: height 400ms var(--pt-ease), content-visibility 400ms allow-discrete; }
+.pt-faq details[open]::details-content { height: auto; }
+/* Where the browser supports scroll-linked animation, the cards rise in one after another as they scroll into view. */
+@supports (animation-timeline: view()) {
+  .pt-faq details { animation: pt-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+  @keyframes pt-rise { from { opacity: 0; translate: 0 28px; } }
+}
+
+/* 7. Reviews and questions. */
+.pt-reviews { display: grid; gap: var(--space-6); }
+.pt-review-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-5); padding: var(--space-6); border: 1px solid var(--pt-line); border-radius: 20px; background: var(--pt-card); }
+.pt-review-top .pt-actions { margin-top: 0; }
+.pt-review-empty { max-width: 32em; font-family: var(--font-display), Georgia, serif; font-size: clamp(20px, 1.6vw, 26px); line-height: 1.35; }
+.pt-rating-summary { display: grid; grid-template-columns: auto minmax(220px, 1fr); gap: 4px var(--space-6); align-items: center; }
+.pt-rating-average strong { font-family: var(--font-display), Georgia, serif; font-size: 56px; font-weight: 400; line-height: 1; color: var(--pt-gold-2); font-variant-numeric: lining-nums; }
+.pt-rating-average span, .pt-rating-count { font-size: var(--text-sm); color: rgb(246 243 233 / .6); }
+.pt-rating-bars { grid-column: 2; grid-row: 1 / span 3; display: grid; gap: 6px; padding: 0; list-style: none; font-size: var(--text-xs); color: rgb(246 243 233 / .7); }
+.pt-rating-bars li { display: grid; grid-template-columns: 52px 1fr 28px; gap: 10px; align-items: center; }
+.pt-bar { height: 6px; border-radius: 99px; background: rgb(255 255 255 / .08); overflow: hidden; }
+.pt-bar span { display: block; height: 100%; background: var(--gold); }
+.pt-stars { display: inline-flex; gap: 2px; font-size: 18px; letter-spacing: 0; color: rgb(246 243 233 / .25); }
+.pt-stars [data-on] { color: var(--pt-gold-2); }
+.pt-review-toolbar { display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-sm); color: rgb(246 243 233 / .7); }
+.pt-review-list, .pt-qa-list { display: grid; gap: var(--space-4); padding: 0; list-style: none; }
+.pt-review { display: grid; gap: var(--space-2); padding: var(--space-5) var(--space-6); border: 1px solid var(--pt-line); border-radius: 18px; }
+.pt-review-title { font-size: var(--text-md); font-weight: 500; }
+.pt-review-meta { display: flex; flex-wrap: wrap; gap: 4px var(--space-4); font-size: var(--text-sm); color: rgb(246 243 233 / .6); }
+.pt-verified { color: #7fc9a0; }
+.pt-review-shade { font-size: var(--text-sm); color: rgb(246 243 233 / .7); }
+.pt-review-reply { margin-top: var(--space-3); padding: var(--space-4) var(--space-5); border-left: 2px solid var(--gold); border-radius: 0 12px 12px 0; background: rgb(215 165 83 / .06); }
+.pt-qa-list li { display: grid; gap: var(--space-2); padding-bottom: var(--space-4); border-bottom: 1px solid var(--pt-line); line-height: 1.6; }
+.pt-qa-q { color: var(--ivory); }
+.pt-qa-a { color: var(--text-secondary); }
+.pt-qa-list strong { color: var(--gold); font-weight: 500; }
+.pt-qa-by { font-size: var(--text-sm); color: rgb(246 243 233 / .5); }
+.pt-reviews .pt-sub > .pt-button { margin-top: var(--space-4); }
+
+/* Review and question forms. */
+.pt-form { display: grid; gap: var(--space-5); padding: var(--space-6); border: 1px solid rgb(215 165 83 / .35); border-radius: 20px; background: rgb(255 255 255 / .02); }
+.pt-form-title { font-family: var(--font-display), Georgia, serif; font-size: 26px; }
+.pt-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4) var(--space-5); }
+.pt-form label { display: grid; gap: 6px; }
+.pt-form label > span, .pt-rating-input legend { font-size: var(--text-xs); letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+.pt-span-2 { grid-column: 1 / -1; }
+.pt-form :is(input:not([type="radio"]), select, textarea), .pt-review-toolbar select { width: 100%; min-height: 46px; padding: 10px 14px; border: 1px solid rgb(246 243 233 / .2); border-radius: 12px; font: inherit; color: var(--ivory); background: rgb(255 255 255 / .04); }
+.pt-review-toolbar select { width: auto; }
+.pt-form :is(input, select, textarea):focus { outline: none; border-color: var(--gold); }
+.pt-form select option, .pt-review-toolbar option { color: #111; }
+.pt-rating-input { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; border: 0; }
+.pt-rating-input legend { width: 100%; margin-bottom: var(--space-2); padding: 0; }
+.pt-rating-input label { cursor: pointer; }
+.pt-rating-input input { position: absolute; opacity: 0; pointer-events: none; }
+.pt-rating-input span { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border: 1px solid rgb(246 243 233 / .22); border-radius: 99px; font-size: var(--text-sm); letter-spacing: 0; text-transform: none; color: rgb(246 243 233 / .8); }
+.pt-rating-input input:checked + span { border-color: transparent; color: #241a07; background: var(--pt-gold-2); }
+.pt-rating-input input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 2px; }
+.pt-form-error { color: #e0796b; }
+.pt-form-done { padding: var(--space-5) var(--space-6); border: 1px solid rgb(127 201 160 / .4); border-radius: 16px; color: #7fc9a0; background: rgb(127 201 160 / .08); }
+/* The honeypot field stays in the form for bots but is never seen or reached by people. */
+.pt-honeypot { position: absolute !important; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+/* 8. Related products: whole-card links. */
+.pt-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: clamp(12px, 1.4vw, 24px); padding: 0; list-style: none; }
+.pt-card { display: flex; flex-direction: column; gap: var(--space-2); height: 100%; padding: var(--space-5); border: 1px solid var(--pt-line); border-radius: 22px; text-decoration: none; background: var(--pt-card); transition: border-color 300ms ease, translate 400ms var(--pt-ease); }
+.pt-card:hover { border-color: rgb(215 165 83 / .5); translate: 0 -3px; }
+.pt-card img { width: 100%; aspect-ratio: 4 / 3; margin-bottom: var(--space-3); border-radius: 14px; object-fit: contain; background: radial-gradient(ellipse at 50% 60%, rgb(255 232 196 / .12), transparent 70%); }
+.pt-card img.pt-card-logo { padding: 18% 22%; opacity: .55; }
+.pt-card-title { font-family: var(--font-display), Georgia, serif; font-size: 22px; font-weight: 400; line-height: 1.2; }
+.pt-card-role { flex: 1; font-size: var(--text-sm); line-height: 1.55; color: var(--text-secondary); }
+.pt-card-link { margin-top: var(--space-2); font-size: var(--text-xs); font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--pt-gold-2); }
+.pt-links { display: flex; flex-wrap: wrap; gap: 0 var(--space-6); margin-top: var(--space-5); padding: 0; list-style: none; }
+
+/* Category pages. */
+.pt-category-hero { padding: calc(var(--header-height, 84px) + 8svh) var(--pt-edge) clamp(32px, 6svh, 64px); }
+.pt-category-hero .pt-title-name { font-size: clamp(40px, 4.4vw, 76px); }
+.pt-category-hero + .pt-section { border-top: 0; padding-top: 0; }
+
+/* Motion: hover lifts, the FAQ opening, the step line filling and cards rising; none of it with reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .pt-card, .pt-features li, .pt-faq details, .pt-faq-q, .pt-faq-mark, .pt-faq-mark::before, .pt-faq-mark::after, .pt-faq details::details-content, .pt-process-card, .pt-process-marker { transition: none; }
+  .pt-process-step, .pt-extra, .pt-process::after { animation: none; }
+  .pt-process::after { scale: 1 1; }
+  :is(.pt-card, .pt-features li):hover, .pt-process-step:hover .pt-process-card { translate: none; }
+  .pt-faq details, .pt-faq details[open] .pt-faq-answer { animation: none; }
+  .pt-faq summary:hover .pt-faq-mark { scale: none; }
+}
+:root[data-motion-choice="reduced"] :is(.pt-card, .pt-features li, .pt-faq details, .pt-faq-q, .pt-faq-mark, .pt-faq-mark::before, .pt-faq-mark::after) { transition: none; }
+:root[data-motion-choice="reduced"] .pt-faq details::details-content { transition: none; }
+:root[data-motion-choice="reduced"] :is(.pt-card, .pt-features li):hover { translate: none; }
+:root[data-motion-choice="reduced"] :is(.pt-faq details, .pt-faq details[open] .pt-faq-answer) { animation: none; }
+:root[data-motion-choice="reduced"] .pt-faq summary:hover .pt-faq-mark { scale: none; }
+:root[data-motion-choice="reduced"] :is(.pt-process-card, .pt-process-marker) { transition: none; }
+:root[data-motion-choice="reduced"] .pt-process-step:hover .pt-process-card { translate: none; }
+:root[data-motion-choice="reduced"] :is(.pt-process-step, .pt-extra, .pt-process::after) { animation: none; }
+:root[data-motion-choice="reduced"] .pt-process::after { scale: 1 1; }
+
+/* Below wide screens the process becomes a vertical timeline: the numbers down the left on the gold line. */
+@media (max-width: 1199px) {
+  .pt-process { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .pt-process::before, .pt-process::after { top: calc(var(--pt-dot) / 2); bottom: calc(var(--pt-dot) / 2); left: calc(var(--pt-dot) / 2); right: auto; width: 1px; height: auto; }
+  .pt-process::after { background: linear-gradient(var(--pt-gold-2), var(--gold)); transform-origin: top; scale: 1 0; }
+  .pt-process-step { grid-row: auto; grid-template-rows: none; grid-template-columns: var(--pt-dot) minmax(0, 1fr); gap: 18px; }
+  .pt-process-marker { justify-self: start; margin-bottom: 0; }
+  .pt-process-card { display: block; grid-row: auto; }
+  .pt-process-tag { display: inline-block; }
+  .pt-process-card .pt-body { font-size: var(--text-base); }
+}
+@supports not (animation-timeline: view()) { @media (max-width: 1199px) { .pt-process::after { scale: 1 1; } } }
+@media (max-width: 1023px) {
+  .pt-hero { align-items: flex-start; min-height: 0; }
+  .pt-hero-backdrop::after { background: linear-gradient(180deg, rgb(3 8 12 / .7), rgb(3 8 12 / .8) 50%, var(--ink)); }
+  .pt-hero-inner { grid-template-columns: minmax(0, 1fr); padding-top: calc(var(--header-height, 72px) + var(--space-5)); }
+  /* Phones stack the image last, after the buttons. */
+  /* The packshot's 4:5 frame is mostly empty above and below the bucket: trim it so the page doesn't gape. */
+  .pt-pack { width: min(80vw, 380px); margin: calc(min(80vw, 380px) * -.1) auto calc(min(80vw, 380px) * -.2); }
+  .pt-usage, .pt-price, .pt-faq-layout { grid-template-columns: minmax(0, 1fr); }
+  .pt-faq-intro { position: static; }
+  .pt-features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pt-features li:last-child:nth-child(3n + 1) { grid-column: auto; grid-row: span 3; grid-template-rows: subgrid; grid-template-columns: none; row-gap: var(--space-3); align-items: stretch; }
+  .pt-features li:last-child:nth-child(3n + 1) .pt-feature-icon { grid-row: auto; margin-bottom: var(--space-2); }
+  .pt-glance { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pt-glance div:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 599px) {
+  .pt-title-name { font-size: clamp(40px, 12vw, 56px); }
+  /* Phones: the question numbers make way for the words; the answer starts under the question. */
+  .pt-faq { --pt-faq-num: 0px; --pt-faq-gap: 12px; }
+  .pt-faq-num { display: none; }
+  .pt-faq summary { grid-template-columns: minmax(0, 1fr) auto; padding-block: 16px; }
+  .pt-faq-mark { width: 32px; height: 32px; }
+  .pt-faq-answer { padding-left: var(--pt-faq-pad); }
+  /* Phones: smaller step numbers and tighter cards. */
+  .pt-process { --pt-dot: 38px; }
+  .pt-process-step { gap: 12px; }
+  .pt-extra { grid-template-columns: minmax(0, 1fr); padding: var(--space-5); }
+  /* Phones: the badges as a two-by-two block. */
+  .pt-badges { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pt-badges li { padding: 12px 12px; }
+  .pt-badges li:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .pt-badges li:nth-child(n + 3) { border-top: 1px solid rgb(246 243 233 / .12); }
+  .pt-form-grid { grid-template-columns: minmax(0, 1fr); }
+  /* Phones: one column of compact rows, the icon beside the words. */
+  .pt-features { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .pt-features li, .pt-features li:last-child:nth-child(n) { grid-column: auto; grid-row: auto; grid-template-rows: auto auto; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--space-4); row-gap: 4px; align-items: start; padding: var(--space-5); }
+  .pt-features .pt-feature-icon, .pt-features li:last-child:nth-child(n) .pt-feature-icon { grid-row: 1 / span 2; width: 42px; height: 42px; margin-bottom: 0; border-radius: 12px; }
+  .pt-features strong { align-self: start; }
+  .pt-spec-table th, .pt-spec-table td { display: block; width: auto; padding: 10px 18px; }
+  .pt-spec-table th { padding-bottom: 0; border-bottom: 0; }
+  .pt-rating-summary { grid-template-columns: minmax(0, 1fr); }
+  .pt-rating-bars { grid-column: auto; grid-row: auto; margin-top: var(--space-3); }
+  .pt-actions .pt-button { flex: 1 1 100%; }
+  .pt-review-top, .pt-form, .pt-system, .pt-price-card { padding: var(--space-5); }
+}

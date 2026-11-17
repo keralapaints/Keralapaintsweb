@@ -5,7 +5,7 @@ import { absoluteUrl } from "@/lib/product/product-schema";
 import { BRAND_LOGO } from "@/lib/preload";
 
 /** The blog index's address, and a post's (the site is exported with trailing slashes). */
-export const BLOG_PATH = "/blog/";
+export const BLOG_PATH = "/blog";
 export const blogPath = (slug: string) => `${BLOG_PATH}${slug}/`;
 
 /** A product's page, by its `id`, for the links and cards in an article. */

@@ -2,12 +2,13 @@ import { moreProducts, productRange, roomCopy, type CatalogueProduct, type Produ
 import { productDetails, type ProductDetail } from "@/data/product-details";
 import { productCategories, type ProductCategoryCopy } from "@/data/products-page";
 import { packUrl, stillUrl } from "../media/media";
+import { productPath } from "./product-urls";
+
+// Other files that import productPath from here keep working; it now lives in lib/product/product-urls.ts.
+export { productPath };
 
 /** A product's looping nature film, with its first frame as the poster so the still hands over to the film unseen. */
 const backdrop = (id: string) => ({ video: `/films/product-bg/${id}.mp4`, poster: `/stills/product-bg/${id}.webp` });
-
-/** A product's page address (the site is exported with trailing slashes). */
-export const productPath = (slug: string) => `/products/${slug}/`;
 
 /** The long-form page words for a product; every product in data/products must have them. */
 function detailFor(id: string): ProductDetail {
@@ -20,7 +21,7 @@ export type Product = ProductContent & {
   /** Background film; without one the poster stands alone. */
   video?: string;
   poster: string;
-  /** Its page: /products/<slug>/. */
+  /** Its page: /products/<category>/<slug>. */
   path: string;
 };
 
@@ -55,8 +56,8 @@ export const productPages: ProductPageData[] = [
 /** The product page for an address slug, if there is one. */
 export const findProductPage = (slug: string) => productPages.find((product) => product.slug === slug);
 
-/** The Products overview page's address. */
-export const PRODUCTS_PATH = "/products/";
+/** The Products overview page's address (no trailing slash). */
+export const PRODUCTS_PATH = "/products";
 
 /** The eight categories on the Products overview page, each with its product and the words the overview shows. */
 export const productCategoryCards: (ProductPageData & { card: ProductCategoryCopy })[] = productPages.filter((product) => product.inRange).map((product) => {
