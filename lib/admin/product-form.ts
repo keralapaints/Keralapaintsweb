@@ -85,11 +85,19 @@ export const BACKDROPS = [
 /** The packshots already prepared in public/images/products/hd (each with -480 and -768 sizes). */
 export const PACKSHOTS = [
   { value: "", label: "No packshot (backdrop only)" },
-  { value: "/images/products/hd/bhadram-in-v2.webp", label: "Bhadram IN" },
-  { value: "/images/products/hd/gold-ex-v2.webp", label: "Bhadram EX / Gold EX" },
-  { value: "/images/products/hd/prime-platinum-v2.webp", label: "Prime Platinum" },
+  { value: "/images/products/hd/bhadram-in-v3.webp", label: "Bhadram IN" },
+  { value: "/images/products/hd/bhadram-ex-v3.webp", label: "Bhadram EX" },
+  { value: "/images/products/hd/gold-in-v3.webp", label: "Gold IN" },
+  { value: "/images/products/hd/gold-ex-v3.webp", label: "Gold EX" },
+  { value: "/images/products/hd/silver-in-v3.webp", label: "Silver IN" },
+  { value: "/images/products/hd/silver-ex-v3.webp", label: "Silver EX" },
+  { value: "/images/products/hd/all-in-one-v3.webp", label: "All-In-One" },
+  { value: "/images/products/hd/smart-shine-v3.webp", label: "Smart Shine" },
+  { value: "/images/products/hd/prime-platinum-v3.webp", label: "Prime Platinum" },
+  { value: "/images/products/hd/prime-gold-v3.webp", label: "Prime Gold" },
+  { value: "/images/products/hd/prime-silver-v3.webp", label: "Prime Silver" },
+  { value: "/images/products/hd/cool-coat-v3.webp", label: "Cool Coat" },
   { value: "/images/products/hd/aqua-seal.webp", label: "Aqua Seal 2K" },
-  { value: "/images/products/hd/cool-coat-v2.webp", label: "Cool Coat" },
   { value: "/images/products/hd/tile-coat-v2.webp", label: "Tile & Floor Coat" },
   { value: "/images/products/hd/enamel.webp", label: "Enamels" },
 ] as const;
