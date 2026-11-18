@@ -1,6 +1,6 @@
 import { productPageCopy } from "@/data/product-details";
 import { productTemplateCopy as copy } from "@/data/product-template";
-import { fill, priceFigures } from "@/lib/product/product-price";
+import { fill } from "@/lib/product/product-price";
 import { bucketVariant } from "@/lib/product/product-images";
 import { BRAND_LOGO } from "@/lib/preload";
 import { toProductStep } from "@/lib/product/product-steps";
@@ -31,8 +31,9 @@ type ProductTemplatePageProps = {
 type RelatedCard = { key: string; name: string; role: string; href: string; image: string; logo?: boolean; linkLabel: string };
 
 /**
- * A product page in the eight-section template (data/product-template.ts): Hero, Key features, Specifications, How to
- * apply, Price, FAQ, Reviews and Related products. Exactly one H1; each section one H2; sub-topics H3.
+ * A product page in the template (data/product-template.ts): Hero, Key features, Specifications, How to apply, FAQ,
+ * Reviews and Related products. Exactly one H1; each section one H2; sub-topics H3. The price is not shown on the
+ * page; it stays in the product's search-engine data only (lib/product/template-schema.ts).
  */
 export function ProductTemplatePage({ product, pages, category, reviews, outletsPath }: ProductTemplatePageProps) {
   const name = product.name;
@@ -41,9 +42,6 @@ export function ProductTemplatePage({ product, pages, category, reviews, outlets
   const featuresLead = product.featuresLead ? [product.featuresLead] : product.overview;
   // The steps are the "How to apply" rows edited in /admin.
   const steps = product.steps.map(toProductStep);
-  const price = product.price;
-  const figures = price && priceFigures(price);
-  const unitWord = price?.unit === "kg" ? "kg" : "litre";
 
   const relatedCards: RelatedCard[] = product.related
     ? product.related.map((item) => {
@@ -161,30 +159,6 @@ export function ProductTemplatePage({ product, pages, category, reviews, outlets
 
       {/* Older long-form sections (tables, cards) written before the template, such as Aqua Seal 2K's application guide. */}
       {product.sections && product.sections.length > 0 && <ProductSections sections={product.sections} paths={paths} />}
-
-      {price && figures && <section id="price-cost" className="pt-section" aria-labelledby="price-cost-heading">
-        <h2 id="price-cost-heading" className="pt-h2">{heading("price")}</h2>
-        {price.lead && <p className="pt-lead">{price.lead}</p>}
-        <div className="pt-price">
-          <div className="pt-price-card">
-            <p className="pt-price-label">{price.label}</p>
-            <dl>
-              {figures.mrp && <div><dt>{copy.price.mrp}</dt><dd><s>{`₹${figures.mrp}`}</s></dd></div>}
-              <div className="pt-price-offer"><dt>{copy.price.offer}</dt><dd>{`₹${figures.offer}`}</dd></div>
-              <div><dt>{copy.price.coverage}</dt><dd>{fill(copy.price.coverageValue, { coverage: price.coverage, unit: unitWord })}</dd></div>
-              <div><dt>{fill(copy.price.packCoverage, { pack: price.pack, unit: price.unit })}</dt><dd>{fill(copy.price.packCoverageValue, { area: figures.area })}</dd></div>
-              <div><dt>{copy.price.cost}</dt><dd>{fill(copy.price.costValue, { cost: figures.cost })}</dd></div>
-            </dl>
-            <p className="pt-price-calc">{fill(copy.price.calculation, { offer: figures.offer, area: figures.area, cost: figures.cost, name })}</p>
-          </div>
-          <div className="pt-price-notes">
-            <p className="pt-note">{price.note ?? fill(copy.price.note, { name })}</p>
-            <p className="pt-footnote">{price.footnote ?? copy.price.footnote}</p>
-            {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- the home page is always a full load, so its story starts clean */}
-            <a className="pt-button pt-button--primary" href="/#enquiry">{copy.price.estimate}</a>
-          </div>
-        </div>
-      </section>}
 
       {product.faqs.length > 0 && <section id="faq" className="pt-section" aria-labelledby="faq-heading">
         <div className="pt-faq-layout">
