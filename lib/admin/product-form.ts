@@ -102,7 +102,7 @@ export const PACKSHOTS = [
   { value: "/images/products/hd/texture-v3.webp", label: "Texture" },
   { value: "/images/products/hd/enamel-v3.webp", label: "Enamel" },
   { value: "/images/products/hd/wood-finish-v3.webp", label: "Wood Finish" },
-  { value: "/images/products/hd/aqua-seal.webp", label: "Aqua Seal 2K" },
+  { value: "/images/products/hd/aqua-seal-v3.webp", label: "Aqua Seal 2K" },
 ] as const;
 
 /** A page address from a name: "Prime Silver Primer" → "prime-silver-primer". */
