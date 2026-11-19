@@ -97,9 +97,12 @@ export const PACKSHOTS = [
   { value: "/images/products/hd/prime-gold-v3.webp", label: "Prime Gold" },
   { value: "/images/products/hd/prime-silver-v3.webp", label: "Prime Silver" },
   { value: "/images/products/hd/cool-coat-v3.webp", label: "Cool Coat" },
+  { value: "/images/products/hd/tile-coat-v3.webp", label: "Tile Coat" },
+  { value: "/images/products/hd/ultra-white-putty-v3.webp", label: "Ultra White Putty" },
+  { value: "/images/products/hd/texture-v3.webp", label: "Texture" },
+  { value: "/images/products/hd/enamel-v3.webp", label: "Enamel" },
+  { value: "/images/products/hd/wood-finish-v3.webp", label: "Wood Finish" },
   { value: "/images/products/hd/aqua-seal.webp", label: "Aqua Seal 2K" },
-  { value: "/images/products/hd/tile-coat-v2.webp", label: "Tile & Floor Coat" },
-  { value: "/images/products/hd/enamel.webp", label: "Enamels" },
 ] as const;
 
 /** A page address from a name: "Prime Silver Primer" → "prime-silver-primer". */
