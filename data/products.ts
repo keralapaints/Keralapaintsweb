@@ -24,7 +24,7 @@ export const productRange: ProductContent[] = [{
   title: "Interior Emulsion",
   short: "Interior Emulsion",
   backdrop: "pearl-shell",
-  bucket: "/images/products/hd/bhadram-in-v2.webp",
+  bucket: "/images/products/hd/bhadram-in-v3.webp",
   description: "Inspired by the pearl shell that glows while guarding the life within, our Interior Emulsion keeps your walls shining, clean and strong for years.",
 }, {
   id: "gold-ex",
@@ -32,7 +32,7 @@ export const productRange: ProductContent[] = [{
   title: "Exterior Emulsion",
   short: "Exterior Emulsion",
   backdrop: "peacock",
-  bucket: "/images/products/hd/gold-ex-v2.webp",
+  bucket: "/images/products/hd/bhadram-ex-v3.webp",
   description: "Inspired by the peacock’s feathers that shine in every season, our Exterior Emulsion keeps your walls glossy, strong and beautiful through sun and rain.",
 }, {
   id: "prime-platinum",
@@ -40,7 +40,7 @@ export const productRange: ProductContent[] = [{
   title: "Primers",
   short: "Primers",
   backdrop: "forest-roots",
-  bucket: "/images/products/hd/prime-platinum-v2.webp",
+  bucket: "/images/products/hd/prime-platinum-v3.webp",
   description: "Like invisible roots that give trees their strength, our health-friendly primers build a strong foundation for healthy walls and protect your family’s well-being.",
 }, {
   id: "aqua-seal",
@@ -48,7 +48,7 @@ export const productRange: ProductContent[] = [{
   title: "Water Proofing",
   short: "Water Proofing",
   backdrop: "forest-dew",
-  bucket: "/images/products/hd/aqua-seal.webp",
+  bucket: "/images/products/hd/aqua-seal-v3.webp",
   packScale: .78,
   packY: "-3.4%",
   description: "Inspired by the Colocasia Leaf that never lets water stick, our waterproofing range keeps your walls dry, strong, and protected in every season.",
@@ -58,7 +58,7 @@ export const productRange: ProductContent[] = [{
   title: "Thermostat",
   short: "Thermostat",
   backdrop: "banyan",
-  bucket: "/images/products/hd/cool-coat-v2.webp",
+  bucket: "/images/products/hd/cool-coat-v3.webp",
   description: "Inspired by the banyan tree that offers shade, coolness, and protection in every season, Cool Coat keeps your home cooler, waterproof, and long-lasting.",
 }, {
   id: "floor-coat",
@@ -66,7 +66,7 @@ export const productRange: ProductContent[] = [{
   title: "Tile & Floor Coat",
   short: "Tile & Floor Coat",
   backdrop: "ladybug",
-  bucket: "/images/products/hd/tile-coat-v2.webp",
+  bucket: "/images/products/hd/tile-coat-v3.webp",
   description: "Inspired by the glossy shell of the ladybug, our Tile & Floor Coat delivers strength, shine, and vibrant beauty while protecting your floors for years.",
 }, {
   id: "enamel",
@@ -74,7 +74,7 @@ export const productRange: ProductContent[] = [{
   title: "Enamels",
   short: "Enamels",
   backdrop: "enamel",
-  bucket: "/images/products/hd/enamel.webp",
+  bucket: "/images/products/hd/enamel-v3.webp",
   packScale: .9,
   packY: "2.4%",
   description: "Inspired by the vibrant wings of butterflies, our Enamels add lasting color, glossy beauty, and strong protection to wood and metal surfaces.",
@@ -85,7 +85,7 @@ export const productRange: ProductContent[] = [{
   short: "Damp Proof",
   backdrop: "2k-coating",
   // Aqua Seal 2K's carton: the supplied packshots hold no separate 2K Coating pack.
-  bucket: "/images/products/hd/aqua-seal.webp",
+  bucket: "/images/products/hd/aqua-seal-v3.webp",
   packScale: .78,
   packY: "-3.4%",
   description: "Inspired by the cactus that holds water without ever letting it escape, Tough Seal forms a watertight barrier that keeps dampness out and your walls dry.",
