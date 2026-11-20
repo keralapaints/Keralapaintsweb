@@ -68,30 +68,6 @@ export const productCategories: readonly ProductCategory[] = [
     seoDescription: "Explore Kerala Paints heat-reflective roof coatings that help reduce solar heat absorption on concrete terraces.",
     products: ["cool-coat"],
   },
-  {
-    slug: "tile-floor-coatings", name: "Tile & Floor Coatings", plural: "Tile & Floor Coatings",
-    heading: "Tile & Floor Coatings",
-    description: "Explore coating products for suitable tile and floor-related applications. Check the product details to confirm surface compatibility, preparation requirements and the recommended finish.",
-    seoTitle: "Tile & Floor Coatings | Kerala Paints",
-    seoDescription: "Explore Kerala Paints tile and floor coatings for verandas, courtyards and cement floors.",
-    products: ["tile-floor-coat"],
-  },
-  {
-    slug: "enamel-paints", name: "Enamel Paints", plural: "Enamel Paints",
-    heading: "Enamel Paints",
-    description: "Explore Kerala Paints enamel products for suitable applications. Review the product specifications to select an option that matches the intended surface and finish.",
-    seoTitle: "Enamel Paints for Wood & Metal | Kerala Paints",
-    seoDescription: "Explore Kerala Paints enamel paints for doors, windows, grills, gates and furniture.",
-    products: ["enamel-paint"],
-  },
-  {
-    slug: "damp-proofing", name: "Damp Proofing", plural: "Damp-Proofing Products",
-    heading: "Damp-Proofing Products",
-    description: "Explore products intended for suitable dampness-related surface treatment. Identify the source of moisture and follow the recommended treatment system before applying finishing coats.",
-    seoTitle: "Damp-Proofing Products | Kerala Paints",
-    seoDescription: "Explore Kerala Paints damp-proofing products for walls affected by dampness and seepage.",
-    products: ["damp-proof-coating"],
-  },
 ];
 
 /** Shared words on the category pages. */
