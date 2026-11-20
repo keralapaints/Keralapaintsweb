@@ -3,8 +3,7 @@
  * Colours, Technology, outlets and gallery are placeholders (`#`) until those pages exist.
  */
 export const siteNavigation: { label: string; href?: string; items?: { label: string; href: string }[] }[] = [
-   { label: "Colours", items: [{ label: "Colour Palette", href: "/colours" }, { label: "Shade Finder", href: "#" }, { label: "Colour Stories", href: "#" }] },
-  { label: "Technology", items: [{ label: "Poison-Free Paint", href: "#" }, { label: "Research & Testing", href: "#" }] },
+   { label: "Colours", items: [{ label: "Colour Palette", href: "/colours" }] },
     { label: "Find an Outlet", href: "/outlets" },
   { label: "Warranty", href: "https://warrantyportal.keralapaints.com/" },
   { label: "Gallery", href: "#" },
